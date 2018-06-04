@@ -106,7 +106,8 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
   }
 
   efficiency_matrix <- list(mean = efficiency_mean,
-                            sd = efficiency_sd)
+                            sd = efficiency_sd,
+                            type = paste(input_type, collapse = "/"))
   
   # return efficiency_matrix object with class definition
   as.efficiency_matrix(efficiency_matrix)
@@ -138,7 +139,7 @@ is.efficiency_matrix <- function (x) {
 #' print(x)
 
 print.efficiency_matrix <- function (x, ...) {
-  cat("This is an efficiency_matrix object")
+  cat(paste0("This is an efficiency_matrix object with ", x$type, " user-defined mean and standard deviation"))
 }
 
 

@@ -38,6 +38,8 @@ build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
     
     dominance <- matrix(1, nrow = nsp, ncol = nsp)
     dominance <- dominance * lower.tri(dominance)
+    
+    type <- "default"
 
   } else {
     
@@ -45,10 +47,13 @@ build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
       stop("dominance must be NULL or a nspecies-by-nspecies matrix")
     }
     
+    type <- "user-defined"
+    
   }
   
   # create dominance_matrix object
-  dominance_matrix <- list(dominance = dominance)
+  dominance_matrix <- list(dominance = dominance,
+                           type = type)
   
   # return dominance_matrix object with class definition
   as.dominance_matrix(dominance_matrix)
@@ -80,7 +85,7 @@ is.dominance_matrix <- function (x) {
 #' print(x)
 
 print.dominance_matrix <- function (x, ...) {
-  cat("This is a dominance_matrix object")
+  cat(paste0("This is a ", x$type, " dominance_matrix object"))
 }
 
 

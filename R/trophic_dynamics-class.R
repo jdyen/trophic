@@ -7,7 +7,6 @@
 #' @param food_web a \link[trophic]{food_web} object identifying (weighted) trophic links between species pairs
 #' @param efficiency_matrix an \link[trophic]{efficiency_matrix} object storing the efficiency of energy conversion between all pairs of species
 #' @param dominance_matrix a \link[trophic]{dominance_matrix} object identifying the relative dominance of a species over other species feeding off the same resource
-#' @param pb_ratio a \link[trophic]{pb_ratio} object defining the link between production and standing biomass for a given trophic group
 #' @param x an object to print or test as a trophic_dynamics object
 #' @param ... further arguments passed to or from other methods
 #'
@@ -32,32 +31,42 @@
 #' test_fw <- build_food_web(interaction_matrix = food_web)
 #' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = efficiency_sd)
 #' test_dominance <- build_dominance_matrix(dominance = dominance)
-#' test_pb_ratio <- build_pb_ratio(pb_range = c(0.25, 5.75), pb_prob = c(5, 20, 10, 3, 1, 1, 1))
 #' 
 #' # Construct the trophic_dynamics object
-#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance, pb_ratio = test_pb_ratio)
+#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
 
-build_trophic_dynamics <- function (food_web, efficiency_matrix, dominance_matrix, pb_ratio, ...) {
-  
-  # check input types
+build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominance_matrix = NULL, ...) {
+
+  # check input types on food web interaction matrix
   if (!is.food_web(food_web)) {
     stop("food_web object must be created using the build_food_web() function")
   }
+  
+  # fill NULL efficiency matrix if required
+  if (is.null(efficiency_matrix)) {
+    efficiency_matrix <- build_efficiency_matrix(efficiency_mean = 0.1, efficiency_sd = 0.01,
+                                                 nsp = food_web$nsp)
+    efficiency_matrix$type <- "default"
+  }
+  
+  # fill NULL dominance matrix if required
+  if (is.null(dominance_matrix)) {
+    dominance_matrix <- build_dominance_matrix(dominance = NULL, nsp = food_web$nsp)
+    dominance_matrix$type <- "default"
+  }
+  
+  # check input types on efficiency and dominance matrices
   if (!is.efficiency_matrix(efficiency_matrix)) {
     stop("efficiency_matrix object must be created using the build_efficiency_matrix() function")
   }
   if (!is.dominance_matrix(dominance_matrix)) {
     stop("dominance_matrix object must be created using the build_dominance_matrix() function")
   }
-  if (!is.pb_ratio(pb_ratio)) {
-    stop("pb_ratio object must be created using the build_pb_ratio() function")
-  }
-  
+
   # create trophic_dynamics object
   trophic_dynamics <- list(food_web = food_web,
                            efficiency_matrix = efficiency_matrix,
-                           dominance_matrix = dominance_matrix,
-                           pb_ratio = pb_ratio)
+                           dominance_matrix = dominance_matrix)
   
   # return trophic_dynamics object with class definition
   as.trophic_dynamics(trophic_dynamics)
@@ -89,7 +98,9 @@ is.trophic_dynamics <- function (x) {
 #' print(x)
 
 print.trophic_dynamics <- function (x, ...) {
-  cat("This is a trophic_dynamics object")
+  cat(paste0("This is a trophic_dynamics object with ", x$food_web$nsp, " species, ",
+             x$efficiency_matrix$type, " efficiency matrix, and ",
+             x$dominance_matrix$type, " dominance matrix"))
 }
 
 #' @rdname trophic_dynamics

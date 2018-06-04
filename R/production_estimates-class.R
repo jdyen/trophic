@@ -43,12 +43,12 @@
 estimate_production <- function(trophic_dynamics, replicates = 1){
   
   production_estimates <- future::future_lapply(seq_len(replicates),
-                                               FUN = estimate,
-                                               trophic_dynamics = trophic_dynamics,
-                                               future.seed = FALSE)
+                                                FUN = estimate,
+                                                trophic_dynamics = trophic_dynamics,
+                                                future.seed = FALSE)
   
   as.production_estimates(production_estimates)
-
+   
 }
 
 #' @rdname production_estimates

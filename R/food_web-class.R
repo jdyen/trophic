@@ -5,7 +5,7 @@
 #' 
 #' @rdname food_web
 #' 
-#' @param interaction_matrix a matrix identifying (weighted) trophic links between species pairs
+#' @param interaction_matrix a matrix identifying (weighted) trophic links between species pairs (rows eat columns)
 #' @param x an object to print or test as a food_web object
 #' @param ... further arguments passed to or from other methods
 #'
@@ -48,7 +48,7 @@ build_food_web <- function (interaction_matrix, ...) {
   
   # convert food web to lower triangular form
   if (!all(almost_equal(upper_matrix, 0))) {
-    interaction_matrix <- t(upper_matrix)
+    interaction_matrix <- upper_matrix[rev(seq_len(nrow(interaction_matrix))), rev(seq_len(ncol(interaction_matrix)))]
   } else {
     interaction_matrix <- lower_matrix
   }
@@ -59,7 +59,8 @@ build_food_web <- function (interaction_matrix, ...) {
   }
     
   # create food_web object
-  food_web <- list(interaction_matrix = interaction_matrix)
+  food_web <- list(interaction_matrix = interaction_matrix,
+                   nsp = ncol(interaction_matrix))
 
   # return food_web object with class definition
   as.food_web(food_web)
@@ -91,7 +92,7 @@ is.food_web <- function (x) {
 #' print(x)
 
 print.food_web <- function (x, ...) {
-  cat("This is a food_web object")
+  cat(paste0("This is a food_web object with ", x$nsp, " species"))
 }
 
 #' @rdname food_web

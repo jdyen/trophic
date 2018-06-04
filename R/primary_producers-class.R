@@ -1,7 +1,6 @@
 #' Create a primary_producers object to use in a trophic projection
 #'
 #' @description A 'primary_producers' object stores the primary production inputs for a set of nodes in a food web
-#' It is a sub-component of a \link[trophic]{trophic_dynamics} object
 #' 
 #' @rdname primary_producers
 #' 
@@ -24,14 +23,30 @@
 
 build_primary_producers <- function (production_mean, production_sd, ...) {
   
-  # add some checks
+  # check vectors match
+  n_primary <- length(production_mean)
+  if (length(production_sd) != n_primary) {
+    stop(paste0("Length of production_mean and production_sd does not match; production_mean has ",
+                n_primary, " elements and production_sd has ", length(production_sd), " values"),
+         call. = FALSE)
+  }
   
-  # possibly add some names or IDs?? (could do same with food web objects (e.g. nsp) to speed up later calcs (and improve printing)
-  # e.g. print "food web object with nsp species and x trophic levels and ??
+  # add some names to primary producers
+  if (is.null(names(production_mean))) {
+    if (is.null(names(production_sd))) {
+      name_set <- letters[seq_len(n_primary)]
+    } else {
+      name_set <- names(production_sd)
+    }
+  } else {
+    name_set <- names(production_mean)
+  }
   
   # create primary_producers object
   primary_producers <- list(mean = production_mean,
-                            sd = production_sd)
+                            sd = production_sd,
+                            names = name_set,
+                            n = n_primary)
   
   # return food_web object with class definition
   as.primary_producers(primary_producers)
@@ -63,7 +78,7 @@ is.primary_producers <- function (x) {
 #' print(x)
 
 print.primary_producers <- function (x, ...) {
-  cat("This is a primary_producers object")
+  cat(paste0("This is a primary_producers object with ", x$n, " primary producers: ", paste(x$names, collapse = ", ")))
 }
 
 

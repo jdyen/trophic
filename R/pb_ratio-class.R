@@ -1,7 +1,6 @@
 #' Create a pb_ratio object to use in a trophic projection
 #'
 #' @description A 'pb ratio' object stores the potentially stochastic ratio of production to standing biomass
-#' It is a sub-component of a \link[trophic]{trophic_dynamics} object
 #' 
 #' @rdname pb_ratio
 #' 
