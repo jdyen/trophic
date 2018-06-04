@@ -13,6 +13,8 @@
 #' 
 #' @export
 #'
+#' @importFrom igraph graph_from_adjacency_matrix
+#' 
 #' @examples
 #' 
 #' library(trophic)
@@ -102,11 +104,7 @@ print.food_web <- function (x, ...) {
 #'
 #' plot(x)
 
-plot.food_web <- function (x, y = NULL, ...) {
-  
-  if (!is.null(y)) {
-    warning("y is not NULL but is ignored")
-  }
+plot.food_web <- function (x, ...) {
 
   # create an igraph object from the adjacency matrix
   fw_graph <- igraph::graph_from_adjacency_matrix(x$interaction_matrix,
