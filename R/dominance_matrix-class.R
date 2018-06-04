@@ -1,15 +1,17 @@
-#' Create a food_web object to use in a trophic projection
+#' Create a dominance_matrix object to use in a trophic projection
 #'
-#' @description A 'food web' object stores the trophic dynamics of a set of potentially interacting species.
+#' @description A 'dominance matrix' object stores the relative dominance of a species over other species sharing the same resource.
 #' It is a sub-component of a \link[trophic]{trophic_dynamics} object
 #' 
-#' @rdname food_web
+#' @rdname dominance_matrix
 #' 
-#' @param interaction_matrix a matrix identifying (weighted) trophic links between species pairs
-#' @param x an object to print or test as a food_web object
+#' @param dominance a matrix (or NULL object) identifying the relative dominance of a species over other species feeding off the same resource
+#' @param x an object to print or test as a dominance_matrix object
 #' @param ... further arguments passed to or from other methods
 #'
-#' @return An object of class \code{food_web}
+#' @return An object of class \code{dominance_matrix}
+#' 
+#' @note Passing dominance = NULL will create a flat dominance matrix with all species assigned equal dominance
 #' 
 #' @export
 #'
@@ -17,101 +19,72 @@
 #' 
 #' library(trophic)
 #' 
-#' # Load a pre-compiled food_web object
+#' # Load a pre-compiled dominance_matrix object
 #' 
-#' food_web <- data(example_food_web)
+#' dominance <- data(example_dominance_matrix)
 #' 
-#' # Construct the food_web object
+#' # Construct the dominance_matrix object
 #' 
-#' test_fw <- build_food_web(interaction_matrix = food_web)
+#' test_dominance <- build_dominance_matrix(dominance = dominance)
 
-build_food_web <- function (interaction_matrix, ...) {
+build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
   
-  # check food web for cannibalism
-  if (!all(almost_equal(diag(interaction_matrix), 0))) {
-    stop("A diagonal element of the interaction_matrix is not zero but cannibalism is not supported")
-  }
-  
-  # check if a symmetric matrix has been provided
-  if (isSymmetric(interaction_matrix)) {
-    stop("The interaction_matrix is symmetric but must not contain loops")
-  }
-  
-  # check food web for loops
-  upper_matrix <- interaction_matrix * upper.tri(interaction_matrix)
-  lower_matrix <- interaction_matrix * lower.tri(interaction_matrix)
-  if (!all(almost_equal(upper_matrix, 0)) & !all(almost_equal(lower_matrix, 0))) {
-    stop("There are non-zero entries in the lower and upper diagonal of the interaction_matrix but this matrix should be sorted into lower or upper diagonal form")
-  }
-  
-  # convert food web to lower triangular form
-  if (!all(almost_equal(upper_matrix, 0))) {
-    interaction_matrix <- t(upper_matrix)
+  # create flat dominance matrix
+  if (is.null(dominance)) {
+    
+    if (is.null(nsp)) {
+      stop("Number of species must be supplied if dominance is NULL")
+    }
+    
+    dominance <- matrix(1, nrow = nsp, ncol = nsp)
+    dominance <- dominance * lower.tri(dominance)
+
   } else {
-    interaction_matrix <- lower_matrix
+    
+    if (!is.matrix(dominance)) {
+      stop("dominance must be NULL or a nspecies-by-nspecies matrix")
+    }
+    
   }
   
-  # create food_web object
-  food_web <- list(interaction_matrix = interaction_matrix)
+  # create dominance_matrix object
+  dominance_matrix <- list(dominance = dominance)
   
-  # return food_web object with class definition
-  as.food_web(food_web)
+  # return dominance_matrix object with class definition
+  as.dominance_matrix(dominance_matrix)
   
 }
 
-#' @rdname food_web
+#' @rdname dominance_matrix
 #'
 #' @export
 #' 
 #' @examples
 #'
-#' # Test if object is of the type 'food_web'
+#' # Test if object is of the type 'dominance_matrix'
 #'   
-#' is.food_web(x)
+#' is.dominance_matrix(x)
 
-is.food_web <- function (x) {
-  inherits(x, 'food_web')
+is.dominance_matrix <- function (x) {
+  inherits(x, 'dominance_matrix')
 }
 
-#' @rdname food_web
+#' @rdname dominance_matrix
 #'
 #' @export
 #'
 #' @examples
 #' 
-#' # Print information about the 'food_web' object
+#' # Print information about the 'dominance_matrix' object
 #'
 #' print(x)
 
-print.food_web <- function (x, ...) {
-  cat("This is a food_web object")
+print.dominance_matrix <- function (x, ...) {
+  cat("This is a dominance_matrix object")
 }
 
-#' @rdname food_web
-#'
-#' @export
-#'
-#' @examples
-#' 
-#' # Plot a 'food_web' object
-#'
-#' plot(x)
 
-plot.food_web <- function (x, y = NULL, ...) {
-  
-  if (!is.null(y)) {
-    warning("y is not NULL but is ignored")
-  }
-  
-  # create an igraph object from the adjacency matrix
-  fw_graph <- igraph::graph_from_adjacency_matrix(x)
-  
-  # plot the adjacency matrix
-  plot(fw_graph)
-  
-}
-
-# internal function: create food_web object
-as.food_web <- function (food_web) {
-  as_class(food_web, name = "food_web", type = "list")
+# internal function: create dominance_matrix object
+as.dominance_matrix <- function (dominance_matrix) {
+  as_class(dominance_matrix, name = "dominance_matrix", type = "list")
 }

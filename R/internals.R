@@ -68,38 +68,35 @@ layout_fw <- function(w, tlfunc = min, ...) {
 
   # identify primary producers
   primary_producers <- almost_equal(igraph::degree(w, mode = "out"), 0)
-  
-  # calculate vertex sequence
-  vert_seq <- igraph::V(w)
-  
+
   # calculate trophic levels
   full_sp <- igraph::shortest.paths(w)
   short_path <- igraph::shortest.paths(w,
-                                       vert_seq[names(primary_producers[!primary_producers])],
-                                       vert_seq[names(primary_producers[primary_producers])])
-  vert_seq[names(primary_producers[primary_producers])]$y <- 0
-  long_edge <- apply(short_path, 1, tlfunc, ...)
-  for(i in seq_len(length(long_edge))){
-    vert_seq[names(long_edge)[i]]$y <- long_edge[i]
+                                       igraph::V(w)[names(primary_producers[!primary_producers])],
+                                       igraph::V(w)[names(primary_producers[primary_producers])])
+  igraph::V(w)[names(primary_producers[primary_producers])]$y <- 0
+  le <- apply(short_path, 1, tlfunc, ...)
+  for(i in seq_len(length(le))){
+    igraph::V(w)[names(le)[i]]$y <- le[i]
   }
 
   # randomise species horizontal plot positions
-  vert_seq$x <- sample(seq(from = -1, to = 1, length = length(vert_seq)))
+  igraph::V(w)$x <- sample(seq(from = -1, to = 1, length = length(igraph::V(w))))
 
   # calculate horizontal plot positions
   for(i in seq_len(5)) {
-    for(j in sample(seq_len(length(vert_seq)))) {
-      vert_seq[j]$x <- mean(vert_seq[almost_equal(full_sp[j, ], 1)]$x)
+    for(j in sample(seq_len(length(igraph::V(w))))) {
+      igraph::V(w)[j]$x <- mean(igraph::V(w)[almost_equal(full_sp[j, ], 1)]$x)
     }
-    for(j in unique(vert_seq$y)) {
-      accepted_nodes <- vert_seq[almost_equal(vert_seq$y, j)]$x
+    for(j in unique(igraph::V(w)$y)) {
+      accepted_nodes <- igraph::V(w)[almost_equal(igraph::V(w)$y, j)]$x
       n_accepted <- length(accepted_nodes)
-      vert_seq[almost_equal(vert_seq$y, uy)]$x <-
+      igraph::V(w)[almost_equal(igraph::V(w)$y, j)]$x <-
         seq(from = -n_accepted, to = n_accepted, length = n_accepted)[rank(accepted_nodes, ties.method = 'random')]
     }
   }
   
   # return outputs
-  cbind(vert_seq$x, vert_seq$y)
+  cbind(igraph::V(w)$x, igraph::V(w)$y)
   
 }

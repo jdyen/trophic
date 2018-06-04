@@ -50,7 +50,12 @@ build_food_web <- function (interaction_matrix, ...) {
   } else {
     interaction_matrix <- lower_matrix
   }
-  
+
+  # add column names
+  if (is.null(colnames(interaction_matrix))) {
+    colnames(interaction_matrix) <- letters[seq_len(ncol(interaction_matrix))]
+  }
+    
   # create food_web object
   food_web <- list(interaction_matrix = interaction_matrix)
 
@@ -102,12 +107,15 @@ plot.food_web <- function (x, y = NULL, ...) {
   if (!is.null(y)) {
     warning("y is not NULL but is ignored")
   }
-  
+
   # create an igraph object from the adjacency matrix
-  fw_graph <- igraph::graph_from_adjacency_matrix(x)
+  fw_graph <- igraph::graph_from_adjacency_matrix(x$interaction_matrix,
+                                                  weighted = TRUE,
+                                                  mode = "directed")
   
   # plot the adjacency matrix
-  plot(fw_graph)
+  plot(fw_graph,
+       layout = layout_fw)
   
 }
 
