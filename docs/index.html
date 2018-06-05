@@ -35,8 +35,22 @@
 
 
 <section class="main-content">
-<p>The <code>trophic</code> R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network. Key features include:</p>
-<p><strong>modular</strong> all aspects of <code>trophic</code> are isolated in distinct modules, allowing easy development of custom models <strong>parallelised</strong> <code>trophic</code> allows multiple scenarios to be run simultaneously using one of many parallel architectures <strong>stochasticity</strong> all aspects of <code>trophic</code> models can incorporate stochasticity, with additional modules for sensitivity analysis</p>
+<style>
+.nobullet li {
+  list-style-type: none;
+}
+</style>
+<p>The <code>trophic</code> R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network.</p>
+<div id="key-features" class="section level2">
+<h2>key features</h2>
+<div class="nobullet">
+<ul>
+<li><p><strong>modular</strong> – develop custom model structures by linking different model components, all isolated in distinct modules</p></li>
+<li><p><strong>flexible</strong> – run multiple scenarios simultaneously using your choice of parallel architecture</p></li>
+<li><strong>stochastic</strong> – incorporate stochasticity into any model component, with additional modules for sensitivity analysis</li>
+</ul>
+</div>
+</div>
 <div id="basic-example" class="section level2">
 <h2>basic example</h2>
 <p>Here’s a simple example with the sample data sets included in <code>trophic</code>:</p>
@@ -62,10 +76,18 @@ trophic_dynamics_object &lt;- build_trophic_dynamics(food_web = food_web_object,
                                                   efficiency_matrix = efficiency_object,
                                                   dominance_matrix = dominance_object)
 
-# Estimate production values from constructed trophic_dynamics object, allowing stochasticity in the food web and the transfer efficiencies
+# Estimate production values from constructed trophic_dynamics object, allowing
+#   stochasticity in the food web and the transfer efficiencies
 production_estimates &lt;- estimate_production(trophic_dynamics_object,
                                             primary_producers_example,
-                                            stochastic = c(&quot;food_web&quot;, &quot;efficiency&quot;))</code></pre>
+                                            stochastic = c(&quot;food_web&quot;, &quot;efficiency&quot;))
+                                            
+# estimate biomass from production using a deterministic or stochastic production-
+#   biomass ratio
+test_pb_ratio &lt;- build_pb_ratio(range = c(0.25, 5.75),
+                                probs = c(5, 20, 10, 3, 1, 1, 1))
+biomass_estimates &lt;- estimate_biomass(production_estimates,
+                                      test_pb_ratio)</code></pre>
 </div>
 </section>
 

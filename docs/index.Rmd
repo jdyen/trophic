@@ -6,16 +6,27 @@ output:
     highlight: github
 ---
 
+<style>
+.nobullet li {
+  list-style-type: none;
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 set.seed(2018-06-05)
 ```
 
-The `trophic` R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network. Key features include:
+The `trophic` R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network.
 
-**modular** all aspects of `trophic` are isolated in distinct modules, allowing easy development of custom models
-**parallelised** `trophic` allows multiple scenarios to be run simultaneously using one of many parallel architectures
-**stochasticity** all aspects of `trophic` models can incorporate stochasticity, with additional modules for sensitivity analysis
+## key features
+<div class="nobullet">
+* **modular** -- develop custom model structures by linking different model components, all isolated in distinct modules
+
+* **flexible** -- run multiple scenarios simultaneously using your choice of parallel architecture
+
+* **stochastic** -- incorporate stochasticity into any model component, with additional modules for sensitivity analysis
+</div>
 
 
 ## basic example
@@ -45,8 +56,16 @@ trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
                                                   efficiency_matrix = efficiency_object,
                                                   dominance_matrix = dominance_object)
 
-# Estimate production values from constructed trophic_dynamics object, allowing stochasticity in the food web and the transfer efficiencies
+# Estimate production values from constructed trophic_dynamics object, allowing
+#   stochasticity in the food web and the transfer efficiencies
 production_estimates <- estimate_production(trophic_dynamics_object,
                                             primary_producers_example,
                                             stochastic = c("food_web", "efficiency"))
+                                            
+# estimate biomass from production using a deterministic or stochastic production-
+#   biomass ratio
+test_pb_ratio <- build_pb_ratio(range = c(0.25, 5.75),
+                                probs = c(5, 20, 10, 3, 1, 1, 1))
+biomass_estimates <- estimate_biomass(production_estimates,
+                                      test_pb_ratio)
 ```
