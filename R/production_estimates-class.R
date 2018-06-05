@@ -15,6 +15,7 @@
 #' @export
 #' 
 #' @importFrom future plan multiprocess future values
+#' @importFrom future.apply future_lapply
 #' @importFrom truncnorm rtruncnorm
 #'
 #' @examples
@@ -106,7 +107,7 @@ estimate <- function(i,
                      nsim) {
 
   # unpack indices and food webs
-  nsp <- trophic_dynamics$food_web$nsp
+  nsp <- trophic_dynamics$food_web[[i]]$nsp
   if (trophic_dynamics$ntrophic > 1) {
     food_web <- trophic_dynamics$food_web[[i]]
   } else {
