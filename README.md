@@ -4,7 +4,7 @@
 
 trophic lets you simulate energy flows through a partial or complete food web. Known energy flows can be linked to biomass and abundance estimates at any given trophic level.
 
-### See the [website](https://jdyen.github.io/trophic/) for more information, [tutorials](https://jdyen.github.io/trophic/get_started.html), [examples](https://jdyen.github.io/trophic/example_models.html), and [package documentation](https://jdyen.github.io/trophic/reference-index.html).
+### See the [website](https://jdyen.github.io/trophic/) for more information and some basic examples.
 
 You can install the package directly from GitHub using the devtools package:
 
