@@ -8,6 +8,7 @@ r_packages:
   - future
   - igraph
   - testthat
+  - knitr
 
 cache:
   packages: true
