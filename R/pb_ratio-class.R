@@ -4,8 +4,10 @@
 #' 
 #' @rdname pb_ratio
 #' 
-#' @param pb_range a range of possible pb values
-#' @param pb_prob relative probabilities of pb values in pb_range
+#' @param range a range of possible pb values
+#' @param length length of pb value sequence
+#' @param probs relative probabilities of pb values in pb_range
+#' @param type one of 'fixed', 'gradient', or 'stochastic' that determines how pb_values are treated
 #' @param x an object to print or test as a pb_ratio object
 #' @param ... further arguments passed to or from other methods
 #'
@@ -19,19 +21,37 @@
 #' 
 #' # Construct the pb_ratio object
 #' 
-#' test_pb <- build_pb_ratio(pb_range = c(0.25, 5.75), pb_prob = c(5, 20, 10, 3, 1, 1, 1))
+#' test_pb <- build_pb_ratio(range = c(0.25, 5.75), probs = c(5, 20, 10, 3, 1, 1, 1))
 
-build_pb_ratio <- function (pb_range, pb_prob, ...) {
+build_pb_ratio <- function (range, length = NULL, probs = NULL, type = "stochastic", ...) {
 
   # create sequence of pb_values
-  pb_values <- seq(pb_range[1], pb_range[2], length = length(pb_prob))
+  if (type == "fixed") {
+    values <- mean(range)
+    if (!is.null(length) | !is.null(probs)) {
+      warning("length and probs are ignored if type = 'stochastic'")
+    }
+  }
+  if (type == "gradient") {
+    if (is.null(length)) {
+      stop("Cannont set gradient pb_ratio if length is NULL")
+    }
+    values <- seq(range[1], range[2], length = length)
+  }
+  if (type == "stochastic") {
+    if (is.null(probs)) {
+      stop("Cannot set stochastic pb_ratio if probs is NULL")
+    }
+    values <- seq(range[1], range[2], length = length(probs))
+  }
   
   # standardise pb_prob
-  pb_prob <- pb_prob / sum(pb_prob)
+  probs <- probs / sum(probs)
   
   # create food_web object
-  pb_ratio <- list(values = pb_values,
-                   prob = pb_prob)
+  pb_ratio <- list(values = values,
+                   probs = probs,
+                   type = type)
   
   # return food_web object with class definition
   as.pb_ratio(pb_ratio)
@@ -63,7 +83,7 @@ is.pb_ratio <- function (x) {
 #' print(x)
 
 print.pb_ratio <- function (x, ...) {
-  cat("This is a pb_ratio object")
+  cat("This is a ", x$type, " pb_ratio object")
 }
 
 #' @rdname pb_ratio
@@ -79,14 +99,14 @@ print.pb_ratio <- function (x, ...) {
 plot.pb_ratio <- function (x, ...) {
   
   # plot distribution of pb_ratio values
-  plot(x$prob ~ x$values,
+  plot(x$probs ~ x$values,
        bty = "l", las = 1,
        type = "n",
        xlab = "P:B ratio", ylab = "Probability")
-  lines(x$prob ~ x$values,
+  lines(x$probs ~ x$values,
         lty = 1, lwd = 2,
         col = "gray50")
-  points(x$prob ~ x$values,
+  points(x$probs ~ x$values,
          pch = 16, cex = 1.2,
          col = "black")
   
