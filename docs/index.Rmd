@@ -114,13 +114,13 @@ set.seed(2018-06-05)
 <div class="row">
 
 <div class="col-md-4">
-  <p class="bullet"><b>simple</b></p>
+  <p class="bullet"><b>modular</b></p>
   <br>
   models in trophic are modular and capture energy flows through food webs
 </div>
 
 <div class="col-md-4">
-  <p class="bullet"><b>scalable</b></p>
+  <p class="bullet"><b>scenarios</b></p>
   <br>
   trophic can run multiple scenarios in parallel
 </div>
@@ -148,28 +148,6 @@ set.seed(2018-06-05)
 
 <div class="col-md-1"></div>
 
-<div class="col-md-5">
-  <span class="fa fa-code fa-2x" style="vertical-align:middle;"></span> &emsp; <a href="#example">basic example</a>
-</div>
-
-<div class="col-md-1"></div>
-
-<div class="row">
-
-<div class="col-md-1"></div>
-
-<div class="col-md-1"></div>
-
-</div>
-
-<br>
-
-</div>
-
-</div>
-
-
-
 <div id="example">
 
 <div class="container">
@@ -180,39 +158,44 @@ set.seed(2018-06-05)
 
 <div class="row">
 
-<div class="col-md-6">
-
-Here's a simple example with the `mdb` food web included in trophic:
+Here's a simple example with the example food web included in trophic:
 
 ```
 ```
 ```
 library(trophic)
 
-food_web <- data(mdb)
+food_web_object <- build_food_web(interaction_matrix = food_web)
 
-food_web_object <- build_food_web(food_web)
-plot(food_web_object)
-```
-```
-trophic_object <- build_trophic_dynamics(food_web_object)
-```
-</div>
-<div class="col-md-6">
-```
-production_estimates <- estimate_production(trophic_object)
+efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = 0.01)
 
+dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
+
+primary_producers_example <- build_primary_producers(production_mean = production_mean, production_sd = production_sd)
+
+trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
+                                                  efficiency_matrix = efficiency_object,
+                                                  dominance_matrix = dominance_object)
+
+# Estimate production values from constructed trophic_dynamics object
+production_estimates <- estimate_production(trophic_dynamics_object, primary_producers_example)
 ```
 ```{r vis, echo=FALSE, eval=TRUE, results='hide', message=FALSE, warning=FALSE, fig.height=4, fig.width=6, fig.align="center"}
 
 library(trophic)
 
-food_web_object <- build_food_web(food_web)
-plot(food_web_object)
+food_web_object <- build_food_web(interaction_matrix = food_web)
 
-trophic_object <- build_trophic_dynamics(food_web_object)
+efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = 0.01)
+dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
+primary_producers_example <- build_primary_producers(production_mean = production_mean, production_sd = production_sd)
 
-production_estimates <- estimate_production(trophic_object)
+trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
+                                                  efficiency_matrix = efficiency_object,
+                                                  dominance_matrix = dominance_object)
+
+# Estimate production values from constructed trophic_dynamics object
+production_estimates <- estimate_production(trophic_dynamics_object, primary_producers_example)
 ```
 
 </div>
