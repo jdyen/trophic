@@ -14,5 +14,5 @@ devtools::install_github("jdyen/trophic")
 
 Please leave feedback, bug reports or feature requests at the GitHub [issues page](https://github.com/jdyen/trophic/issues). 
 
-[![build status](https://travis-ci.org/greta-dev/greta.svg?branch=master)](https://travis-ci.org/jdyen/trophic) [![codecov.io](https://codecov.io/github/jdyen/trophic/coverage.svg?branch=master)](https://codecov.io/github/jdyen/trophic?branch=master) [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![build status](https://travis-ci.org/jdyen/trophic.svg?branch=master)](https://travis-ci.org/jdyen/trophic) [![codecov.io](https://codecov.io/github/jdyen/trophic/coverage.svg?branch=master)](https://codecov.io/github/jdyen/trophic?branch=master) [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
  
