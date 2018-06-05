@@ -207,8 +207,6 @@ production_estimates <- estimate_production(trophic_object)
 
 library(trophic)
 
-food_web <- data(mdb)
-
 food_web_object <- build_food_web(food_web)
 plot(food_web_object)
 

@@ -88,8 +88,8 @@ check_input_internal <- function(x) {
 layout_fw <- function(w, tlfunc = min, ...) {
 
   # remove disconnected nodes
-  V(w)$comp <- igraph::components(w)$membership
-  w <- igraph::induced_subgraph(w, V(w)$comp == 1)
+  igraph::V(w)$comp <- igraph::components(w)$membership
+  w <- igraph::induced_subgraph(w, igraph::V(w)$comp == 1)
 
   # identify primary producers
   primary_producers <- almost_equal(igraph::degree(w, mode = "out"), 0)
