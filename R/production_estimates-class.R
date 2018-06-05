@@ -95,7 +95,7 @@ is.production_estimates <- function (x) {
 #' print(x)
 
 print.production_estimates <- function (x, ...) {
-  cat("This is a production_estimates object")
+  cat(paste0("This is a production_estimates object with ", length(x), " replicates"))
 }
 
 

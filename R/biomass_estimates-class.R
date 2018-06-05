@@ -69,7 +69,7 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
                             size = ncol(production_estimates[[1]]),
                             replace = TRUE,
                             prob = pb_ratio$probs)    
-    biomass_estimates <- lapply(production_estimates, function(x) sweep(x, 2, 10 / stochastic_pb), "*")
+    biomass_estimates <- lapply(production_estimates, function(x) sweep(x, 2, 10 / stochastic_pb, "*"))
     
   }
 

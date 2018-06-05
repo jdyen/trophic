@@ -83,7 +83,7 @@ is.pb_ratio <- function (x) {
 #' print(x)
 
 print.pb_ratio <- function (x, ...) {
-  cat("This is a ", x$type, " pb_ratio object")
+  cat(paste0("This is a ", x$type, " pb_ratio object"))
 }
 
 #' @rdname pb_ratio
