@@ -3,12 +3,11 @@ Type: Package
 Title: Trophic Models of Energetics to Estimate Carrying Capacity 
 Version: 0.0.1
 Date: 2018-06-04
-Authors@R: c(person("Jian", "Yen", role = c("aut", "cre"),
-                    email = "jdl.yen@gmail.com"),
-             person("Nick", "Bond", role = "aut",
-                    email = "n.bond@latrobe.edu.au),
-             person("Jim", "Thomson", role = "ctb",
-                    email = "jim.thomson@delwp.vic.gov.au))
+Authors@R: as.person(c(
+    "Jian Yen <jdl.yen@gmail.com> [aut, cre]", 
+    "Nick Bond <n.bond@latrobe.edu.au> [aut]",
+    "Jim Thomson <jim.thomson@delwp.vic.gov.au> [ctb]"
+  ))
 Description: Use complete or partial food webs to predict energy flows to any level of an ecosystem. Link available energy to carrying capacity in abundance and biomass using complete or partial size-abundance distributions. 
 License: Apache License 2.0
 URL: https://github.com/jdyen/trophic
