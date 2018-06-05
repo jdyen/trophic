@@ -53,13 +53,13 @@ build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominanc
   # fill NULL efficiency matrix if required
   if (is.null(efficiency_matrix)) {
     efficiency_matrix <- build_efficiency_matrix(efficiency_mean = 0.1, efficiency_sd = 0.01,
-                                                 nsp = food_web$nsp)
+                                                 nsp = food_web[[1]]$nsp)
     efficiency_matrix$type <- "default"
   }
   
   # fill NULL dominance matrix if required
   if (is.null(dominance_matrix)) {
-    dominance_matrix <- build_dominance_matrix(dominance = NULL, nsp = food_web$nsp)
+    dominance_matrix <- build_dominance_matrix(dominance = NULL, nsp = food_web[[1]]$nsp)
     dominance_matrix$type <- "default"
   }
   
