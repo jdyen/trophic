@@ -66,9 +66,13 @@ check_input_internal <- function(x) {
 # foodweb layout function for plotting (adapted from https://gist.github.com/tpoisot/2984097)
 layout_fw <- function(w, tlfunc = min, ...) {
 
+  # remove disconnected nodes
+  V(w)$comp <- components(w)$membership
+  w <- induced_subgraph(w, V(w)$comp == 1)
+
   # identify primary producers
   primary_producers <- almost_equal(igraph::degree(w, mode = "out"), 0)
-
+  
   # calculate trophic levels
   full_sp <- igraph::shortest.paths(w)
   short_path <- igraph::shortest.paths(w,
@@ -97,6 +101,6 @@ layout_fw <- function(w, tlfunc = min, ...) {
   }
   
   # return outputs
-  cbind(igraph::V(w)$x, igraph::V(w)$y)
+  cbind(igraph::V(w)$x, rev(igraph::V(w)$y))
   
 }
