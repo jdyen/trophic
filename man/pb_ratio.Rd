@@ -7,7 +7,8 @@
 \alias{plot.pb_ratio}
 \title{Create a pb_ratio object to use in a trophic projection}
 \usage{
-build_pb_ratio(pb_range, pb_prob, ...)
+build_pb_ratio(range, length = NULL, probs = NULL, type = "stochastic",
+  ...)
 
 is.pb_ratio(x)
 
@@ -16,9 +17,13 @@ is.pb_ratio(x)
 \method{plot}{pb_ratio}(x, ...)
 }
 \arguments{
-\item{pb_range}{a range of possible pb values}
+\item{range}{a range of possible pb values}
 
-\item{pb_prob}{relative probabilities of pb values in pb_range}
+\item{length}{length of pb value sequence}
+
+\item{probs}{relative probabilities of pb values in pb_range}
+
+\item{type}{one of 'fixed', 'gradient', or 'stochastic' that determines how pb_values are treated}
 
 \item{...}{further arguments passed to or from other methods}
 
@@ -36,7 +41,7 @@ library(trophic)
 
 # Construct the pb_ratio object
 
-test_pb <- build_pb_ratio(pb_range = c(0.25, 5.75), pb_prob = c(5, 20, 10, 3, 1, 1, 1))
+test_pb <- build_pb_ratio(range = c(0.25, 5.75), probs = c(5, 20, 10, 3, 1, 1, 1))
 
 # Test if object is of the type 'pb_ratio'
   

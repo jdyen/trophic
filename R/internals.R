@@ -33,6 +33,8 @@ all_equal_or_one <- function(..., tolerance = 1e-10) {
     for (i in seq_along(test)) {
       out[i] <- almost_equal(test[[i]], test[[1]], tolerance = tolerance)
     }
+  } else {
+    out <- TRUE
   }
   
   all(out)

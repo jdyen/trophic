@@ -43,7 +43,7 @@ build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
 
   } else {
     
-    if (!is.matrix(dominance)) {
+    if (!is.matrix(dominance) & !is.data.frame(dominance)) {
       stop("dominance must be NULL or a nspecies-by-nspecies matrix")
     }
     

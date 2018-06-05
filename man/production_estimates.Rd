@@ -6,7 +6,9 @@
 \alias{print.production_estimates}
 \title{Estimate production for each node in a food web}
 \usage{
-estimate_production(trophic_dynamics, primary_producers, nsim = 100)
+estimate_production(trophic_dynamics, primary_producers,
+  stochastic = c("food_web", "efficiency", "primary_production"),
+  nsim = 100)
 
 is.production_estimates(x)
 
@@ -15,11 +17,13 @@ is.production_estimates(x)
 \arguments{
 \item{trophic_dynamics}{a dynamics object - food web, trophic efficiency, trophic dominance, and P:B ratios}
 
+\item{primary_producers}{a primary_producers object containing estimates of primary production}
+
+\item{nsim}{number of estimates to generate}
+
 \item{x}{a production_estimates object}
 
 \item{...}{further arguments passed to or from other methods}
-
-\item{replicates}{number of estimates to generate}
 }
 \value{
 An object of class \code{production_estimates}
@@ -50,7 +54,7 @@ test_primary_producers <- build_primary_producers(production_mean = c(1, 2), pro
 test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
 
 # Estimate production values from constructed trophic_dynamics object
-production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers, replicates = 2)
+production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
 
 # Test if object is of the type 'production_estimates'
   
