@@ -14,8 +14,6 @@
 #' 
 #' @export
 #'
-#' @importFrom igraph graph_from_adjacency_matrix E V shortest.paths 
-#'
 #' @examples
 #' 
 #' library(trophic)

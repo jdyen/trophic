@@ -13,7 +13,7 @@
 #' 
 #' @export
 #'
-#' @importFrom igraph graph_from_adjacency_matrix
+#' @importFrom igraph graph_from_adjacency_matrix components induced.subgraph shortest.paths V E
 #' 
 #' @examples
 #' 
