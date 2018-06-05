@@ -53,14 +53,28 @@ build_food_web <- function (interaction_matrix, ...) {
     interaction_matrix <- lower_matrix
   }
 
-  # add column names
-  if (is.null(colnames(interaction_matrix))) {
+  # add column and row names
+  if (is.null(colnames(interaction_matrix)) & is.null(rownames(interaction_matrix))) {
     colnames(interaction_matrix) <- letters[seq_len(ncol(interaction_matrix))]
+    rownames(interaction_matrix) <- colnames(interaction_matrix)
+  } else {
+    if (is.null(rownames(interaction_matrix))) {
+      rownames(interaction_matrix) <- colnames(interaction_matrix)
+    } else {
+      colnames(interaction_matrix) <- rownames(interaction_matrix)
+    }
   }
-    
+  
+  # identify if food web is fixed or stochastic
+  type <- "stochastic"
+  if (all(c(interaction_matrix) %in% c(0, 1))) {
+    type <- "fixed"
+  }
+  
   # create food_web object
   food_web <- list(interaction_matrix = interaction_matrix,
-                   nsp = ncol(interaction_matrix))
+                   nsp = ncol(interaction_matrix),
+                   type = type)
 
   # return food_web object with class definition
   as.food_web(food_web)
@@ -92,7 +106,7 @@ is.food_web <- function (x) {
 #' print(x)
 
 print.food_web <- function (x, ...) {
-  cat(paste0("This is a food_web object with ", x$nsp, " species"))
+  cat(paste0("This is a ", x$type, " food_web object with ", x$nsp, " species"))
 }
 
 #' @rdname food_web

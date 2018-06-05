@@ -35,20 +35,24 @@ build_primary_producers <- function (production_mean, production_sd, ...) {
   if (is.null(names(production_mean))) {
     if (is.null(names(production_sd))) {
       name_set <- letters[seq_len(n_primary)]
+      name_type <- "default"
     } else {
       name_set <- names(production_sd)
+      name_type <- "sd"
     }
   } else {
     name_set <- names(production_mean)
+    name_type <- "mean"
   }
   
   # create primary_producers object
   primary_producers <- list(mean = production_mean,
                             sd = production_sd,
                             names = name_set,
+                            name_type = name_type,
                             n = n_primary)
   
-  # return food_web object with class definition
+  # return primary_producers object with class definition
   as.primary_producers(primary_producers)
   
 }
@@ -78,7 +82,11 @@ is.primary_producers <- function (x) {
 #' print(x)
 
 print.primary_producers <- function (x, ...) {
-  cat(paste0("This is a primary_producers object with ", x$n, " primary producers: ", paste(x$names, collapse = ", ")))
+  cat(paste0("This is a primary_producers object with ",
+             x$n,
+             " primary producers: ",
+             paste(x$names, collapse = ", "),
+             " (", x$name_type, " names)"))
 }
 
 
