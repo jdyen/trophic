@@ -1,0 +1,42 @@
+---
+title: "trophic&#58; examples"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+set.seed(2018-06-05)
+```
+
+The `trophic` package has several different uses. These are some examples of possible use cases. Please feel free to contribute your own additions (see [here](docs/contribute.html) for details).
+
+## example: predicting biomass of a high-order predator with known food web
+```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
+
+# do something
+
+```
+
+## example: predicting biomass of a high-order predator with uncertain food web
+```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
+
+# do something
+
+```
+
+## example: calculating sensitivity of predicted biomass to transfer efficiencies
+```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
+
+# do something
+
+```
+
+## example: calculating sensitivity of predicted biomass to species' dominances
+```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
+
+# do something
+
+```

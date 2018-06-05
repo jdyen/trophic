@@ -65,7 +65,7 @@ production_estimates <- estimate_production(trophic_dynamics_object,
 # estimate biomass from production using a deterministic or stochastic production-
 #   biomass ratio
 test_pb_ratio <- build_pb_ratio(range = c(0.25, 5.75),
-                                probs = c(5, 20, 10, 3, 1, 1, 1))
+                                type = "fixed")
 biomass_estimates <- estimate_biomass(production_estimates,
                                       test_pb_ratio)
 ```

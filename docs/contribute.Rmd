@@ -1,0 +1,15 @@
+---
+title: "trophic&#58; contribute"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+## bugs and issues
+      
+      
+## contributing code
+      
+      
+## modules for new applications

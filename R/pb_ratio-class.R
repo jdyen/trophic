@@ -34,19 +34,35 @@ build_pb_ratio <- function (range, length = NULL, probs = NULL, type = "stochast
   }
   if (type == "gradient") {
     if (is.null(length)) {
-      stop("Cannont set gradient pb_ratio if length is NULL")
+      if (is.null(probs)) {
+        warning("Using fixed pb_ratio; cannot set gradient pb_ratio if length is NULL")
+        values <- mean(range)
+      } else {
+        warning("Using probs to determine gradient length because length argument is NULL")
+        values <- seq(range[1], range[2], length = length(probs))
+      }
+    } else {
+      values <- seq(range[1], range[2], length = length)
     }
-    values <- seq(range[1], range[2], length = length)
   }
   if (type == "stochastic") {
     if (is.null(probs)) {
-      stop("Cannot set stochastic pb_ratio if probs is NULL")
+      if (is.null(length)) {
+        warning("Using fixed pb_ratio; cannot set gradient pb_ratio if length is NULL")
+        values <- mean(range)
+      } else {
+        warning("Using gradient pb_ratio; cannot set stochastic pb_ratio is probs is NULL")
+        values <- seq(range[1], range[2], length = length)
+      }
+    } else {
+      values <- seq(range[1], range[2], length = length(probs))
     }
-    values <- seq(range[1], range[2], length = length(probs))
   }
   
   # standardise pb_prob
-  probs <- probs / sum(probs)
+  if (!is.null(probs)) {
+    probs <- probs / sum(probs)
+  }
   
   # create food_web object
   pb_ratio <- list(values = values,
