@@ -1,4 +1,13 @@
 ---
+navbar:
+  title: "Home"
+  right:
+    - text: "Documentation"
+      href: documentation.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<jdl.yen@gmail.com>
+    - icon: fa-github fa-lg
+      href: http://github.com/jdyen/trophic
 output:
   html_document:
     theme: lumen
@@ -6,210 +15,93 @@ output:
     toc: false
 ---
 
-<style type="text/css">
-body{
-  padding-top: 10px;
-}
-pre, pre:not([class]){
-  font-size: 18px;
-  color: #8F2469FF;
-  background-color: #FCFFA4FF;
-  border: none;
-}
-.container-fluid {
-    padding-left: 0;
-    padding-right: 0;
-}
-.main-container {
-    max-width: 2732px;
-    margin-left: 0;
-    margin-right: 0;
-}
-.bullet{
-  color:#8F2469FF;
-  font-size: 36px;
-}
-.resource,
-.resource > p{
-  color: #8F2469FF;
-  font-size: 32px;
-}
-a, a:hover{
-  color: #8F2469FF;
-}
-.col-md-4,
-.col-md-5,
-.col-md-6{
-  padding-top: 25px;
-  padding-bottom: 25px;
-  padding-left: 25px;
-  padding-right: 25px;
-}
-#header-content {
-  max-width: 100%;
-  margin: 0 auto;
-}
-#main-icon {
-  width: 100%;
-  height: auto;
-  margin-right : auto;
-  margin-left : auto;
-  min-width : 210px;
-  max-width : 585px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 45px;
-}
-#main-icon-text{
-  color:#8F2469FF;
-  font-size: 24px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
-}
-#panel1 {
-  background-color: #FCFFA4FF;
-  box-shadow: 0 0 7px 2px rgba(0,0,0,0.1);
-  max-width: 90%;
-  margin: 0 auto;
-}
-#bullets {
-  padding-left: 15px;
-  padding-right: 15px;
-  font-size: 20px;
-  text-align: center;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-#example {
-  padding-left: 15px;
-  padding-right: 15px;
-  font-size: 20px;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 set.seed(2018-06-05)
 ```
 
-<div class="row">
-<p id="main-icon-text">trophic models of ecosystem energetics in R</p>
-</div>
-    
-</div>
+# trophic: an R package to model ecosystem energetics
 
-</div>
+\newline\newline
 
+- modular models that capture dynamic energy flows through food webs
 
-<div id="bullets">
+- run multiple scenarios in parallel
 
-<br><br>
+- develop your own modules to add realistic details to trophic dynamics
 
-<div class="container">
-<div class="row">
-
-<div class="col-md-4">
-  <p class="bullet"><b>modular</b></p>
-  <br>
-  models in trophic are modular and capture energy flows through food webs
-</div>
-
-<div class="col-md-4">
-  <p class="bullet"><b>scenarios</b></p>
-  <br>
-  trophic can run multiple scenarios in parallel
-</div>
-
-<div class="col-md-4">
-  <p class="bullet"><b>extensible</b></p>
-  <br>
-  it's easy to develop your own modules to alter key components of trophic dynamics
-</div>
-
-</div>
-</div>
-
-<br><br>
-
-</div>
-
-<div id="panel1" class="resource">
-
-<div class="container">
-
-<br>
-
-<div class="row">
-
-<div class="col-md-1"></div>
-
-<div id="example">
-
-<div class="container">
-
-<br><br>
-
-<h1 style="color: #8F2469FF;">basic example</h1>
-
-<div class="row">
-
-</div>
-</div>
+## basic example
 
 Here's a simple example with the example food web included in trophic:
 
-</div>
-</div>
-
 ```
-```
-```
+# load the package
 library(trophic)
 
+# create a food web object from a pre-defined interaction matrix
 food_web_object <- build_food_web(interaction_matrix = food_web)
 
+# plot the food web object
+plot(food_web_object)
+```
+```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
+
+# load the package
+library(trophic)
+
+# create a food web object from a pre-defined interaction matrix
+food_web_object <- build_food_web(interaction_matrix = food_web)
+
+# plot the food web object
+plot(food_web_object)
+```
+
+```
+# optional: create an efficiency object that captures transfer efficiencies among nodes
 efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
                                              efficiency_sd = 0.01)
 
+# optional: create a dominance object that determines the outcomes of competition for resources
 dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
 
+# set some primary production values (inputs to trophic model)
 primary_producers_example <- build_primary_producers(production_mean = production_mean,
                                                      production_sd = production_sd)
-
-trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
-                                                  efficiency_matrix = efficiency_object,
-                                                  dominance_matrix = dominance_object)
-
-# Estimate production values from constructed trophic_dynamics object
-production_estimates <- estimate_production(trophic_dynamics_object, primary_producers_example)
+print(primary_producers)
 ```
-```{r vis, echo=FALSE, eval=TRUE, results='hide', message=FALSE, warning=FALSE, fig.height=4, fig.width=6, fig.align="center"}
 
-library(trophic)
+```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
+# optional: create an efficiency object that captures transfer efficiencies among nodes
+efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                             efficiency_sd = 0.01)
 
-food_web_object <- build_food_web(interaction_matrix = food_web)
-
-efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = 0.01)
+# optional: create a dominance object that determines the outcomes of competition for resources
 dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
-primary_producers_example <- build_primary_producers(production_mean = production_mean, production_sd = production_sd)
 
+# set some primary production values (inputs to trophic model)
+primary_producers_example <- build_primary_producers(production_mean = production_mean,
+                                                     production_sd = production_sd)
+print(primary_producers_example)
+```
+
+```
+# collate trophic information into a single trophic_dynamics object
 trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
                                                   efficiency_matrix = efficiency_object,
                                                   dominance_matrix = dominance_object)
 
 # Estimate production values from constructed trophic_dynamics object
-production_estimates <- estimate_production(trophic_dynamics_object, primary_producers_example)
+production_estimates <- estimate_production(trophic_dynamics_object,
+                                            primary_producers_example)
 ```
 
-</div>
-</div>
+```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
+# collate trophic information into a single trophic_dynamics object
+trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
+                                                  efficiency_matrix = efficiency_object,
+                                                  dominance_matrix = dominance_object)
 
-<br>
-
-</div>
-</div>
+# Estimate production values from constructed trophic_dynamics object
+production_estimates <- estimate_production(trophic_dynamics_object,
+                                            primary_producers_example)
+```
