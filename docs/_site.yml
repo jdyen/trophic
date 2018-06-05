@@ -1,0 +1,11 @@
+name: trophic
+navbar:
+  title: "trophic"
+  right:
+    - text: "Documentation"
+      href: documentation.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<jdl.yen@gmail.com>
+    - icon: fa-github fa-lg
+      href: http://github.com/jdyen/trophic
+
