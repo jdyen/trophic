@@ -1,4 +1,5 @@
 ---
+title: trophic&#58; an R package to model ecosystem energetics
 navbar:
   title: "Home"
   right:
@@ -9,10 +10,9 @@ navbar:
     - icon: fa-github fa-lg
       href: http://github.com/jdyen/trophic
 output:
-  html_document:
-    theme: lumen
-    highlight: default
-    toc: false
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
@@ -20,19 +20,16 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 set.seed(2018-06-05)
 ```
 
-# trophic: an R package to model ecosystem energetics
+The `trophic` R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network. Key features include:
 
-\newline\newline
+- modular: all aspects of `trophic` are isolated in distinct modules, allowing easy development of custom models
+- parallelised: `trophic` allows multiple scenarios to be run simultaneously using one of many parallel architectures
+- stochasticity: all aspects of `trophic` models can incorporate stochasticity, with additional modules for sensitivity analysis
 
-- modular models that capture dynamic energy flows through food webs
-
-- run multiple scenarios in parallel
-
-- develop your own modules to add realistic details to trophic dynamics
 
 ## basic example
 
-Here's a simple example with the example food web included in trophic:
+Here's a simple example with the sample data sets included in `trophic`:
 
 ```
 # load the package
@@ -41,67 +38,24 @@ library(trophic)
 # create a food web object from a pre-defined interaction matrix
 food_web_object <- build_food_web(interaction_matrix = food_web)
 
-# plot the food web object
-plot(food_web_object)
-```
-```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
-
-# load the package
-library(trophic)
-
-# create a food web object from a pre-defined interaction matrix
-food_web_object <- build_food_web(interaction_matrix = food_web)
-
-# plot the food web object
-plot(food_web_object)
-```
-
-```
-# optional: create an efficiency object that captures transfer efficiencies among nodes
+# create an efficiency object that captures transfer efficiencies among nodes
 efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
                                              efficiency_sd = 0.01)
 
-# optional: create a dominance object that determines the outcomes of competition for resources
+# create a dominance object that determines the outcomes of competition for resources
 dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
 
 # set some primary production values (inputs to trophic model)
 primary_producers_example <- build_primary_producers(production_mean = production_mean,
                                                      production_sd = production_sd)
-print(primary_producers)
-```
 
-```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
-# optional: create an efficiency object that captures transfer efficiencies among nodes
-efficiency_object <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-                                             efficiency_sd = 0.01)
-
-# optional: create a dominance object that determines the outcomes of competition for resources
-dominance_object <- build_dominance_matrix(dominance = dominance_matrix)
-
-# set some primary production values (inputs to trophic model)
-primary_producers_example <- build_primary_producers(production_mean = production_mean,
-                                                     production_sd = production_sd)
-print(primary_producers_example)
-```
-
-```
 # collate trophic information into a single trophic_dynamics object
 trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
                                                   efficiency_matrix = efficiency_object,
                                                   dominance_matrix = dominance_object)
 
-# Estimate production values from constructed trophic_dynamics object
+# Estimate production values from constructed trophic_dynamics object, allowing stochasticity in the food web and the transfer efficiencies
 production_estimates <- estimate_production(trophic_dynamics_object,
-                                            primary_producers_example)
-```
-
-```{r, echo=FALSE, eval=TRUE, results='asis', message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align="center"}
-# collate trophic information into a single trophic_dynamics object
-trophic_dynamics_object <- build_trophic_dynamics(food_web = food_web_object,
-                                                  efficiency_matrix = efficiency_object,
-                                                  dominance_matrix = dominance_object)
-
-# Estimate production values from constructed trophic_dynamics object
-production_estimates <- estimate_production(trophic_dynamics_object,
-                                            primary_producers_example)
+                                            primary_producers_example,
+                                            stochastic = c("food_web", "efficiency"))
 ```
