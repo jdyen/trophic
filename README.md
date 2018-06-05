@@ -1,4 +1,4 @@
-<img src="README_files/top_banner.png" width="4032" />
+<img src="README_files/banner.png" width="4032" />
 
 ### trophic is an R package to estimate trophic energy flows and carrying capacities from partial or complete food webs 
 
