@@ -19,7 +19,8 @@ Depends:
     R (>= 3.0)
 Imports:
     igraph,
-    future    
+    future,    
+    truncnorm
 Suggests:
     testthat,
 VignetteBuilder: knitr

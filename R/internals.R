@@ -21,6 +21,25 @@ almost_equal <- function(x, y, tolerance = 1e-10) {
   
 }
 
+# test if multiple values are all equal
+all_equal_or_one <- function(..., tolerance = 1e-10) {
+  
+  test <- list(...)
+  
+  test <- test[test > 1]
+  
+  if (length(test) > 1) {
+    out <- rep(NA, length(test))
+    for (i in seq_along(test)) {
+      out[i] <- almost_equal(test[[i]], test[[1]], tolerance = tolerance)
+    }
+  }
+  
+  all(out)
+  
+}
+
+
 # test input type to functions (scalar, vector, matrix)
 check_input_type <- function(...) {
   

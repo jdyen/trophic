@@ -39,7 +39,17 @@ build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominanc
 
   # check input types on food web interaction matrix
   if (!is.food_web(food_web)) {
-    stop("food_web object must be created using the build_food_web() function")
+    if (is.list(food_web)) {
+      if (!all(sapply(food_web, function(x) is.food_web(x)))) {
+        stop("food_web object must be a single food_web object or list of food_web objects created using the build_food_web() function")
+      }
+      ntrophic <- length(food_web)
+    } else {
+      stop("food_web object must be a single food_web object or list of food_web objects created using the build_food_web() function")
+    }
+  } else {
+    food_web <- list(food_web)
+    ntrophic <- 1
   }
   
   # fill NULL efficiency matrix if required
@@ -57,16 +67,46 @@ build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominanc
   
   # check input types on efficiency and dominance matrices
   if (!is.efficiency_matrix(efficiency_matrix)) {
-    stop("efficiency_matrix object must be created using the build_efficiency_matrix() function")
+    if (is.list(efficiency_matrix)) {
+      if (!all(sapply(efficiency_matrix, function(x) is.efficiency_matrix(x)))) {
+        stop("efficiency_matrix must be a single efficiency_matrix object or list of efficiency_matrix objects created using the build_efficiency_matrix() function")
+      }
+      nefficiency <- length(efficiency_matrix)
+    } else {
+      stop("efficiency_matrix must be a single efficiency_matrix object or list of efficiency_matrix objects created using the build_efficiency_matrix() function")
+    }
+  } else {
+    efficiency_matrix <- list(efficiency_matrix)
+    nefficiency <- 1
   }
   if (!is.dominance_matrix(dominance_matrix)) {
-    stop("dominance_matrix object must be created using the build_dominance_matrix() function")
+    if (is.list(dominance_matrix)) {
+      if (!all(sapply(dominance_matrix, function(x) is.dominance_matrix(x)))) {
+        stop("dominance_matrix must be a single dominance_matrix object or list of dominance_matrix objects created using the build_dominance_matrix() function")
+      }
+      ndominance <- length(dominance_matrix)
+    } else {
+      stop("dominance_matrix must be a single dominance_matrix object or list of dominance_matrix objects created using the build_dominance_matrix() function")
+    }
+  } else {
+    dominance_matrix <- list(dominance_matrix)
+    ndominance <- 1
   }
 
+  # check that food_web, efficiency_matrix, and dominance_matrix have consistent lengths
+  if (!all_equal_or_one(ntrophic, nefficiency, ndominance)) {
+    stop(paste0("There are ", ntrophic, " food_web objects, ",
+                nefficiency, " efficiency_matrix objects, and ",
+                ndominance, " dominance_matrix objects but any values greater than one should be equal"))
+  }
+  
   # create trophic_dynamics object
   trophic_dynamics <- list(food_web = food_web,
                            efficiency_matrix = efficiency_matrix,
-                           dominance_matrix = dominance_matrix)
+                           dominance_matrix = dominance_matrix,
+                           ntrophic = ntrophic,
+                           nefficiency = nefficiency,
+                           ndominance = ndominance)
   
   # return trophic_dynamics object with class definition
   as.trophic_dynamics(trophic_dynamics)
