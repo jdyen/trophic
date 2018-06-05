@@ -1,15 +1,16 @@
 ---
-title: "trophic&#58; contribute"
+title: "contribute to `trophic`"
 output:
   prettydoc::html_pretty:
     theme: cayman
     highlight: github
 ---
 
-## bugs and issues
-      
+## bugs and requests
+We're keen to know about any bugs you find. We'd also like to know if you have any requests. Use the [issues tracker](https://github.com/jdyen/trophic/issues) on GitHub to log issues or requests.
       
 ## contributing code
+We welcome your contributions. If you have an idea for something new, or a possible solution to an existing issue, using the [issues tracker](https://github.com/jdyen/trophic/issues) to discuss it will avoid duplication of effort.
       
-      
-## modules for new applications
+## new applications
+We're looking to add more functionality to `trophic`. Several key tasks are listed as open [issues](https://github.com/jdyen/trophic/issues), but we're happy to chat about other applications of this modelling framework.

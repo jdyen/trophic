@@ -29,6 +29,10 @@ The `trophic` R package is a set of tools to connect trophic interaction network
 </div>
 
 
+## more information
+The [examples](docs/examples.html) has a set of example `trophic` analyses. If you'd like to contribute, check out the [contributions](docs/contribute.html) page. 
+
+
 ## basic example
 
 Here's a simple example with the sample data sets included in `trophic`:

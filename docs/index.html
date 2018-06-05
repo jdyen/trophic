@@ -85,7 +85,7 @@ production_estimates &lt;- estimate_production(trophic_dynamics_object,
 # estimate biomass from production using a deterministic or stochastic production-
 #   biomass ratio
 test_pb_ratio &lt;- build_pb_ratio(range = c(0.25, 5.75),
-                                probs = c(5, 20, 10, 3, 1, 1, 1))
+                                type = &quot;fixed&quot;)
 biomass_estimates &lt;- estimate_biomass(production_estimates,
                                       test_pb_ratio)</code></pre>
 </div>
