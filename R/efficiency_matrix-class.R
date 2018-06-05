@@ -60,7 +60,11 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
     }
     if (input_type[2] == "matrix") {
       nsp <- ncol(input_type[2])
-      efficiency_sd <- efficiency_sd
+      if (is.data.frame(efficiency_sd)) {
+        efficiency_sd <- as.matrix(efficiency_sd)
+      } else {
+        efficiency_sd <- efficiency_sd
+      }
     }
     
     if (is.null(nsp)) {
@@ -94,6 +98,10 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
     
     if (is.null(nsp)) {
       nsp <- ncol(efficiency_mean)
+    }
+    
+    if (is.data.frame(efficiency_mean)) {
+      efficiency_mean <- as.matrix(efficiency_mean)
     }
     
     if (input_type[2] == "vector") {
