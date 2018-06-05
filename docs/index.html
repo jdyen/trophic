@@ -264,11 +264,13 @@ basic example
 
 food_web_object &lt;- build_food_web(interaction_matrix = food_web)
 
-efficiency_object &lt;- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = 0.01)
+efficiency_object &lt;- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                             efficiency_sd = 0.01)
 
 dominance_object &lt;- build_dominance_matrix(dominance = dominance_matrix)
 
-primary_producers_example &lt;- build_primary_producers(production_mean = production_mean, production_sd = production_sd)
+primary_producers_example &lt;- build_primary_producers(production_mean = production_mean,
+                                                     production_sd = production_sd)
 
 trophic_dynamics_object &lt;- build_trophic_dynamics(food_web = food_web_object,
                                                   efficiency_matrix = efficiency_object,
