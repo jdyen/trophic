@@ -60,7 +60,7 @@ check_input_type <- function(...) {
 check_input_internal <- function(x) {
   
   if (length(x) > 1) {
-    if (is.matrix(x)) {
+    if (is.matrix(x) | is.data.frame(x)) {
       
       if (ncol(x) == nrow(x)) {
         type <- "matrix"

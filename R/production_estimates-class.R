@@ -58,13 +58,13 @@ estimate_production <- function(trophic_dynamics,
   }
 
   # parallelise estimates for multiple food webs
-  production_estimates <- future::future_lapply(seq_len(replicates),
-                                                FUN = estimate,
-                                                trophic_dynamics = trophic_dynamics,
-                                                primary_producers = primary_producers,
-                                                stochastic = stochastic,
-                                                nsim = nsim,
-                                                future.seed = FALSE)
+  production_estimates <- future.apply::future_lapply(seq_len(replicates),
+                                                      FUN = estimate,
+                                                      trophic_dynamics = trophic_dynamics,
+                                                      primary_producers = primary_producers,
+                                                      stochastic = stochastic,
+                                                      nsim = nsim,
+                                                      future.seed = FALSE)
   
   as.production_estimates(production_estimates)
    
@@ -129,20 +129,17 @@ estimate <- function(i,
   primary_producer_id <- match(primary_producers$names, spnames)
   
   # create production output matrix
-  production <- matrix(NA, nrow = nsp, ncol = nsim)
+  production <- matrix(0, nrow = nsp, ncol = nsim)
   rownames(production) <- spnames
   
   # initialise the primary producers/inputs
   if ("primary_production" %in% stochastic) {
     
-    production[primary_producer_id, ] <- matrix(truncnorm::rtruncnorm(nsim,
+    production[primary_producer_id, ] <- matrix(truncnorm::rtruncnorm((nsim * primary_producers$n),
                                                                       a = 0,
                                                                       mean = primary_producers$mean,
                                                                       sd = primary_producers$sd),
                                                 nrow = primary_producers$n)
-    
-    # remove negative values from production
-    production <- ifelse(production < 0, 0, production)
     
   } else {
     
@@ -160,6 +157,7 @@ estimate <- function(i,
                              2,
                              n_split,
                              "/")
+  dominance_weights <- as.matrix(dominance_weights)
   
   # calculate efficiency over all iterations
   if ("efficiency" %in% stochastic) {
@@ -169,14 +167,13 @@ estimate <- function(i,
                                               mean = efficiency_matrix$mean,
                                               sd = efficiency_matrix$sd),
                         dim = c(nsp, nsp, nsim))
-    efficiency <- ifelse(efficiency < 0, 0, efficiency)
   } else {
     efficiency <- array(rep(efficiency_matrix$mean, times = nsim),
                         dim = c(nsp, nsp, nsim))
   }
 
   # update depends on whether food web is fixed or stochastic
-  if ((food_web$type == "fixed") | ("food_web" %in% stochastic)) {
+  if ((food_web$type == "fixed") | !("food_web" %in% stochastic)) {
     
     # calculate amount of biomass in each node (working from primary consumers up the food web)
     nodeorder <- seq_len(food_web$nsp)
