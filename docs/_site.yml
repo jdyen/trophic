@@ -1,11 +1,13 @@
-name: trophic
+name: "trophic"
+output_dir: "."
 navbar:
   title: "trophic"
   right:
     - text: "Documentation"
       href: documentation.html
-    - icon: fa-envelope fa-lg
-      href: mailto:<jdl.yen@gmail.com>
     - icon: fa-github fa-lg
-      href: http://github.com/jdyen/trophic
-
+      href: https://github.com/jdyen/trophic
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github

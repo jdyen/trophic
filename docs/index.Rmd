@@ -1,5 +1,5 @@
 ---
-title: trophic&#58; an R package to model ecosystem energetics
+title: "trophic&#58; an R package to model ecosystem energetics"
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -13,9 +13,9 @@ set.seed(2018-06-05)
 
 The `trophic` R package is a set of tools to connect trophic interaction networks with primary production estimates to predict production and biomass at all nodes in a trophic network. Key features include:
 
-- **modular** all aspects of `trophic` are isolated in distinct modules, allowing easy development of custom models
-- **parallelised** `trophic` allows multiple scenarios to be run simultaneously using one of many parallel architectures
-- **stochasticity** all aspects of `trophic` models can incorporate stochasticity, with additional modules for sensitivity analysis
+**modular** all aspects of `trophic` are isolated in distinct modules, allowing easy development of custom models
+**parallelised** `trophic` allows multiple scenarios to be run simultaneously using one of many parallel architectures
+**stochasticity** all aspects of `trophic` models can incorporate stochasticity, with additional modules for sensitivity analysis
 
 
 ## basic example
