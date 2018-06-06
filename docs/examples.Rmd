@@ -14,6 +14,9 @@ set.seed(2018-06-05)
 The `trophic` package has several different uses. These are some examples of possible use cases. Please feel free to contribute your own additions (see [here](contribute.html) for details).
 
 ## example: predicting biomass of a high-order predator with known food web
+
+This is a simple example where we have a known
+
 ```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
 
 # load trophic package
