@@ -7,8 +7,9 @@
 #' @param production_estimates a production_estimates object calculated with \link[trophic]{production_estimates}
 #' @param pb_ratio a production:biomass ratio object created with \link[trophic]{pb_ratio}
 #' @param x a biomass_estimates object
-#' @param nodes integer or integer vector of nodes to plot (indexed by food_web row)
+#' @param nodes integer, character, integer vector, or character vector of nodes to plot (indexed by name or food_web row)
 #' @param settings plot settings passed directly to \link[graphics]{plot}
+#' @param FUN function used to summarise information extracted from a biomass_estimates object
 #' @param ... further arguments passed to or from other methods
 #'
 #' @return An object of class \code{biomass_estimates}
@@ -147,7 +148,23 @@ plot.biomass_estimates <- function (x, nodes = NULL, settings = list(), ...) {
     if (is.null(nodes)) {
       node_set <- seq_len(nrow(x$biomass[[i]]))
     } else {
-      node_set <- nodes
+      if (is.character(nodes)) {
+        node_set <- match(nodes, rownames(x$biomass[[i]]))
+        if (any(is.na(node_set))) {
+          warning(paste0("some nodes were not found in node names and have been removed: ",
+                         node_set[is.na(node_set)]))
+          node_set <- node_set[!is.na(node_set)]
+        }
+        if (!length(node_set)) {
+          stop("there are no matches between nodes and node names")
+        }
+      } else {
+        if (is.integer(nodes)) {
+          node_set <- nodes
+        } else {
+          stop("nodes must be a character or integer vector")
+        }
+      }
     }
     
     if (length(node_set) == 1) {
@@ -196,6 +213,62 @@ plot.biomass_estimates <- function (x, nodes = NULL, settings = list(), ...) {
     par(mar = old_mar)
     
   }
+  
+}
+
+#' @rdname biomass_estimates
+#'
+#' @export
+#'
+#' @examples
+#' 
+#' # Extract information on one or several nodes from a 'biomass_estimates' object
+#'
+#' \dontrun{
+#' extract_nodes(x, nodes = c(5:7), FUN = mean)
+#' }
+
+extract_nodes <- function (x, nodes = NULL, FUN = summary, ...) {
+
+  nbiomass <- x$replicates
+  
+  out <- vector("list", length = nbiomass)
+  for (i in seq_len(nbiomass)) {
+
+    if (is.null(nodes)) {
+      node_set <- seq_len(nrow(x$biomass[[i]]))
+    } else {
+      if (is.character(nodes)) {
+        node_set <- match(nodes, rownames(x$biomass[[i]]))
+        if (any(is.na(node_set))) {
+          warning(paste0("some nodes were not found in node names and have been removed: ",
+                         node_set[is.na(node_set)]))
+          node_set <- node_set[!is.na(node_set)]
+        }
+        if (!length(node_set)) {
+          stop("there are no matches between nodes and node names")
+        }
+      } else {
+        if (is.integer(nodes)) {
+          node_set <- nodes
+        } else {
+          stop("nodes must be a character or integer vector")
+        }
+      }
+    }
+    
+    if (length(node_set) == 1) {
+      out[[i]] <- FUN(x$biomass[[i]],
+                      ...)
+      out[[i]] <- matrix(out[[i]], ncol = 1)
+      colnames(out[[i]]) <- rownames(x$biomass[[i]])[node_set]
+    } else {
+      out[[i]] <- apply(x$biomass[[i]][node_set, ], 1, FUN, ...)
+    }
+      
+  }
+  
+  out
   
 }
 

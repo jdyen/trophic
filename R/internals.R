@@ -77,7 +77,11 @@ check_input_internal <- function(x) {
     }
     
   } else {
-    type <- "scalar"
+    if (is.null(x)) {
+      type <- "missing"
+    } else {
+      type <- "scalar"
+    }
   }
   
   type

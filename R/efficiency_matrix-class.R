@@ -91,6 +91,19 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
     if (input_type[2] == "scalar") {
       efficiency_sd <- matrix(rep(efficiency_sd, times = (nsp * nsp)), ncol = nsp)
     }
+    if (input_type[2] == "missing") {
+      efficiency_sd <- matrix(rep(mean(efficiency_mean), times = (nsp * nsp)), ncol = nsp)
+    }
+    if (input_type[2] == "matrix") {
+      if (ncol(efficiency_sd) != nsp) {
+        stop("number of columns of efficiency_sd does not match length of efficiency_mean")
+      }
+      if (is.data.frame(efficiency_sd)) {
+        efficiency_sd <- as.matrix(efficiency_sd)
+      } else {
+        efficiency_sd <- efficiency_sd
+      }
+    }
     
   }
   
@@ -110,6 +123,19 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
     }
     if (input_type[2] == "scalar") {
       efficiency_sd <- matrix(rep(efficiency_sd, times = (nsp * nsp)), ncol = nsp)
+    }
+    if (input_type[2] == "missing") {
+      efficiency_sd <- matrix(rep(mean(efficiency_mean), times = (nsp * nsp)), ncol = nsp)
+    }
+    if (input_type[2] == "matrix") {
+      if (ncol(efficiency_sd) != nsp) {
+        stop("number of columns of efficiency_sd does not match length of efficiency_mean")
+      }
+      if (is.data.frame(efficiency_sd)) {
+        efficiency_sd <- as.matrix(efficiency_sd)
+      } else {
+        efficiency_sd <- efficiency_sd
+      }
     }
     
   }
