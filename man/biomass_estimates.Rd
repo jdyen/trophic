@@ -66,13 +66,19 @@ biomass_estimates <- estimate_biomass(production_estimates, test_pb_ratio)
 
 # Test if object is of the type 'biomass_estimates'
   
+\dontrun{
 is.biomass_estimates(x)
+}
 
 # Print information about the 'biomass_estimates' object
 
+\dontrun{
 print(x)
+}
 
 # Plot a 'biomass_estimates' object
 
+\dontrun{
 plot(x)
+}
 }

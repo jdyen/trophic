@@ -38,9 +38,13 @@ test_producers <- build_primary_producers(production_mean = c(1, 2, 3),
 
 # Test if object is of the type 'primary_producers'
   
+\dontrun{
 is.primary_producers(x)
+}
 
 # Print information about the 'primary_producers' object
 
+\dontrun{
 print(x)
+}
 }

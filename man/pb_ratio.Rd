@@ -45,13 +45,19 @@ test_pb <- build_pb_ratio(range = c(0.25, 5.75), probs = c(5, 20, 10, 3, 1, 1, 1
 
 # Test if object is of the type 'pb_ratio'
   
+\dontrun{
 is.pb_ratio(x)
+}
 
 # Print information about the 'pb_ratio' object
 
+\dontrun{
 print(x)
+}
 
 # Plot a 'pb_ratio' object
 
+\dontrun{
 plot(x)
+}
 }

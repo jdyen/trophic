@@ -45,9 +45,13 @@ test_dominance <- build_dominance_matrix(dominance = dominance)
 
 # Test if object is of the type 'dominance_matrix'
   
+\dontrun{
 is.dominance_matrix(x)
+}
 
 # Print information about the 'dominance_matrix' object
 
+\dontrun{
 print(x)
+}
 }

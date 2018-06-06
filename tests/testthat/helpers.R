@@ -1,7 +1,7 @@
 # test functions
 
 # simulate a simple food web without stochasticity to test calculation
-fixed_projection(trophic_dynamics, primary_producers) {
+fixed_projection <- function(trophic_dynamics, primary_producers) {
   
   # only run for a single food web model
   i <- 1

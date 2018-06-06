@@ -87,7 +87,9 @@ build_pb_ratio <- function (range, length = NULL, probs = NULL, type = "stochast
 #'
 #' # Test if object is of the type 'pb_ratio'
 #'   
+#' \dontrun{
 #' is.pb_ratio(x)
+#' }
 
 is.pb_ratio <- function (x) {
   inherits(x, 'pb_ratio')
@@ -101,7 +103,9 @@ is.pb_ratio <- function (x) {
 #' 
 #' # Print information about the 'pb_ratio' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.pb_ratio <- function (x, ...) {
   cat(paste0("This is a ", x$type, " pb_ratio object"))
@@ -115,7 +119,9 @@ print.pb_ratio <- function (x, ...) {
 #' 
 #' # Plot a 'pb_ratio' object
 #'
+#' \dontrun{
 #' plot(x)
+#' }
 
 plot.pb_ratio <- function (x, ...) {
   

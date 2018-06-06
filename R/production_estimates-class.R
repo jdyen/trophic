@@ -82,8 +82,9 @@ estimate_production <- function(trophic_dynamics,
 #' @examples
 #'
 #' # Test if object is of the type 'production_estimates'
-#'   
+#' \dontrun{
 #' is.production_estimates(x)
+#' }
 
 is.production_estimates <- function (x) {
   inherits(x, 'production_estimates')
@@ -111,7 +112,9 @@ print.production_estimates <- function (x, ...) {
 #' 
 #' # Plot a 'production_estimates' object
 #'
+#' \dontrun{
 #' plot(x)
+#' }
 
 plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) {
 
@@ -218,7 +221,7 @@ estimate <- function(i,
   if (any(is.na(primary_producer_id))) {
     primary_producer_id <- seq_len(primary_producers$n)
     warning(paste0("names of primary_producers do not match nodes in food_web; primary_producers are assumed to be the first ",
-                   length(primary_producers),
+                   primary_producers$n,
                    " nodes of food_web"))
   }
   

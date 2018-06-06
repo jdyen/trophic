@@ -94,7 +94,9 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
 #'
 #' # Test if object is of the type 'biomass_estimates'
 #'   
+#' \dontrun{
 #' is.biomass_estimates(x)
+#' }
 
 is.biomass_estimates <- function (x) {
   inherits(x, 'biomass_estimates')
@@ -108,7 +110,9 @@ is.biomass_estimates <- function (x) {
 #' 
 #' # Print information about the 'biomass_estimates' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.biomass_estimates <- function (x, ...) {
   cat(paste0("This is a biomass_estimates object with ", x$replicates, " replicates"))
@@ -122,7 +126,9 @@ print.biomass_estimates <- function (x, ...) {
 #' 
 #' # Plot a 'biomass_estimates' object
 #'
+#' \dontrun{
 #' plot(x)
+#' }
 
 plot.biomass_estimates <- function (x, nodes = NULL, settings = list(), ...) {
   

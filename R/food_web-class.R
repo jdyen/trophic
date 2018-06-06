@@ -86,7 +86,9 @@ build_food_web <- function (interaction_matrix, ...) {
 #'
 #' # Test if object is of the type 'food_web'
 #'   
+#' \dontrun{
 #' is.food_web(x)
+#' }
 
 is.food_web <- function (x) {
   inherits(x, 'food_web')
@@ -100,7 +102,9 @@ is.food_web <- function (x) {
 #' 
 #' # Print information about the 'food_web' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.food_web <- function (x, ...) {
   cat(paste0("This is a ", x$type, " food_web object with ", x$nsp, " species"))
@@ -114,7 +118,9 @@ print.food_web <- function (x, ...) {
 #' 
 #' # Plot a 'food_web' object
 #'
+#' \dontrun{
 #' plot(x)
+#' }
 
 plot.food_web <- function (x, ...) {
 

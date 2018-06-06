@@ -131,7 +131,9 @@ build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp 
 #'
 #' # Test if object is of the type 'efficiency_matrix'
 #'   
+#' \dontrun{
 #' is.efficiency_matrix(x)
+#' }
 
 is.efficiency_matrix <- function (x) {
   inherits(x, 'efficiency_matrix')
@@ -145,7 +147,9 @@ is.efficiency_matrix <- function (x) {
 #' 
 #' # Print information about the 'efficiency_matrix' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.efficiency_matrix <- function (x, ...) {
   cat(paste0("This is an efficiency_matrix object with ", x$type, " user-defined mean and standard deviation"))

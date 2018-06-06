@@ -69,7 +69,9 @@ build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
 #'
 #' # Test if object is of the type 'dominance_matrix'
 #'   
+#' \dontrun{
 #' is.dominance_matrix(x)
+#' }
 
 is.dominance_matrix <- function (x) {
   inherits(x, 'dominance_matrix')
@@ -83,7 +85,9 @@ is.dominance_matrix <- function (x) {
 #' 
 #' # Print information about the 'dominance_matrix' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.dominance_matrix <- function (x, ...) {
   cat(paste0("This is a ", x$type, " dominance_matrix object"))

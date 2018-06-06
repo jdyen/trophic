@@ -50,13 +50,19 @@ test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
 
 # Test if object is of the type 'trophic_dynamics'
   
+\dontrun{
 is.trophic_dynamics(x)
+}
 
 # Print information about the 'trophic_dynamics' object
 
+\dontrun{
 print(x)
+}
 
 # Plot a 'trophic_dynamics' object
 
+\dontrun{
 plot(x)
+}
 }

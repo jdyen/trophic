@@ -39,13 +39,19 @@ test_fw <- build_food_web(interaction_matrix = food_web)
 
 # Test if object is of the type 'food_web'
   
+\dontrun{
 is.food_web(x)
+}
 
 # Print information about the 'food_web' object
 
+\dontrun{
 print(x)
+}
 
 # Plot a 'food_web' object
 
+\dontrun{
 plot(x)
+}
 }

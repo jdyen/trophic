@@ -66,9 +66,13 @@ test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_m
 
 # Test if object is of the type 'efficiency_matrix'
   
+\dontrun{
 is.efficiency_matrix(x)
+}
 
 # Print information about the 'efficiency_matrix' object
 
+\dontrun{
 print(x)
+}
 }

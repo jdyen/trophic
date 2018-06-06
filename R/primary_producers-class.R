@@ -66,7 +66,9 @@ build_primary_producers <- function (production_mean, production_sd, ...) {
 #'
 #' # Test if object is of the type 'primary_producers'
 #'   
+#' \dontrun{
 #' is.primary_producers(x)
+#' }
 
 is.primary_producers <- function (x) {
   inherits(x, 'primary_producers')
@@ -80,7 +82,9 @@ is.primary_producers <- function (x) {
 #' 
 #' # Print information about the 'primary_producers' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.primary_producers <- function (x, ...) {
   cat(paste0("This is a primary_producers object with ",

@@ -63,8 +63,9 @@ test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
 production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
 
 # Test if object is of the type 'production_estimates'
-  
+\dontrun{
 is.production_estimates(x)
+}
 
 # Print information about the 'production_estimates' object
 
@@ -72,5 +73,7 @@ print(x)
 
 # Plot a 'production_estimates' object
 
+\dontrun{
 plot(x)
+}
 }

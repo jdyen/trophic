@@ -117,7 +117,9 @@ build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominanc
 #'
 #' # Test if object is of the type 'trophic_dynamics'
 #'   
+#' \dontrun{
 #' is.trophic_dynamics(x)
+#' }
 
 is.trophic_dynamics <- function (x) {
   inherits(x, 'trophic_dynamics')
@@ -131,7 +133,9 @@ is.trophic_dynamics <- function (x) {
 #' 
 #' # Print information about the 'trophic_dynamics' object
 #'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.trophic_dynamics <- function (x, ...) {
   cat(paste0("This is a trophic_dynamics object with ", x$food_web$nsp, " species, ",
@@ -147,7 +151,9 @@ print.trophic_dynamics <- function (x, ...) {
 #' 
 #' # Plot a 'trophic_dynamics' object
 #'
+#' \dontrun{
 #' plot(x)
+#' }
 
 plot.trophic_dynamics <- function (x, ...) {
   
