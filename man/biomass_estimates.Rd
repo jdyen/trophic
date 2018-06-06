@@ -4,6 +4,7 @@
 \alias{estimate_biomass}
 \alias{is.biomass_estimates}
 \alias{print.biomass_estimates}
+\alias{plot.biomass_estimates}
 \title{Estimate biomass for each node in a food web}
 \usage{
 estimate_biomass(production_estimates, pb_ratio)
@@ -11,6 +12,8 @@ estimate_biomass(production_estimates, pb_ratio)
 is.biomass_estimates(x)
 
 \method{print}{biomass_estimates}(x, ...)
+
+\method{plot}{biomass_estimates}(x, nodes = NULL, settings = list(), ...)
 }
 \arguments{
 \item{production_estimates}{a production_estimates object calculated with \link[trophic]{production_estimates}}
@@ -20,6 +23,10 @@ is.biomass_estimates(x)
 \item{x}{a biomass_estimates object}
 
 \item{...}{further arguments passed to or from other methods}
+
+\item{nodes}{integer or integer vector of nodes to plot (indexed by food_web row)}
+
+\item{settings}{plot settings passed directly to \link[graphics]{plot}}
 }
 \value{
 An object of class \code{biomass_estimates}
@@ -69,4 +76,8 @@ is.biomass_estimates(x)
 # Print information about the 'biomass_estimates' object
 
 print(x)
+
+# Plot a 'biomass_estimates' object
+
+plot(x)
 }

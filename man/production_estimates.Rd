@@ -29,6 +29,10 @@ is.production_estimates(x)
 \item{x}{a production_estimates object}
 
 \item{...}{further arguments passed to or from other methods}
+
+\item{nodes}{integer or integer vector of nodes to plot (indexed by food_web row)}
+
+\item{settings}{plot settings passed directly to \link[graphics]{plot}}
 }
 \value{
 An object of class \code{production_estimates}
