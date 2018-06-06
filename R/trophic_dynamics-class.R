@@ -30,6 +30,11 @@
 #' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
 #'                                                 efficiency_matrix = test_efficiency_matrix,
 #'                                                 dominance_matrix = test_dominance)
+#'
+#' # Construct a trophic_dynamics object with two food webs
+#' test_trophic_dynamics <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
+#'                                                 efficiency_matrix = test_efficiency_matrix,
+#'                                                 dominance_matrix = test_dominance)
 
 build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominance_matrix = NULL, ...) {
 

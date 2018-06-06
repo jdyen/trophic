@@ -20,13 +20,9 @@
 #' 
 #' library(trophic)
 #' 
-#' # Load a pre-compiled dominance_matrix object
-#' 
-#' dominance <- data(example_dominance_matrix)
-#' 
 #' # Construct the dominance_matrix object
 #' 
-#' test_dominance <- build_dominance_matrix(dominance = dominance)
+#' test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
 
 build_dominance_matrix <- function (dominance = NULL, nsp = NULL, ...) {
   

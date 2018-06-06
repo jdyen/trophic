@@ -36,21 +36,15 @@ library(trophic)
 food_web_test <- build_food_web(food_web)
 plot(food_web_test)
 library(trophic)
-data(efficiency_mean)
 efficiency_matrix_test <- build_efficiency_matrix(efficiency_mean)
 efficiency_matrix_test
 library(trophic)
-data(dominance_matrix)
 dominance_matrix_test <- build_dominance_matrix(dominance_matrix)
 dominance_matrix_test
 library(trophic)
-data(production_mean)
-data(production_sd)
 production_test <- build_primary_producers(production_mean, production_sd)
 production_test
 library(trophic)
-data(production_mean)
-data(production_sd)
 production_test <- build_primary_producers(production_mean, production_sd)
 production_test
 }

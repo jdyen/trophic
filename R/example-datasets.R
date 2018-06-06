@@ -34,7 +34,6 @@
 #'
 #' @examples
 #' library(trophic)
-#' data(efficiency_mean)
 #' efficiency_matrix_test <- build_efficiency_matrix(efficiency_mean)
 #' efficiency_matrix_test
 "efficiency_mean"
@@ -55,7 +54,6 @@
 #'
 #' @examples
 #' library(trophic)
-#' data(dominance_matrix)
 #' dominance_matrix_test <- build_dominance_matrix(dominance_matrix)
 #' dominance_matrix_test
 "dominance_matrix"
@@ -76,8 +74,6 @@
 #'
 #' @examples
 #' library(trophic)
-#' data(production_mean)
-#' data(production_sd)
 #' production_test <- build_primary_producers(production_mean, production_sd)
 #' production_test
 "production_mean"
@@ -98,8 +94,6 @@
 #'
 #' @examples
 #' library(trophic)
-#' data(production_mean)
-#' data(production_sd)
 #' production_test <- build_primary_producers(production_mean, production_sd)
 #' production_test
 "production_sd"
