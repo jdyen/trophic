@@ -147,6 +147,9 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
                        p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
     }
     
+    old_mar <- par()$mar
+    par(mar = c(5.1, 10.1, 2.1, 1.1))
+    
     plot(to_plot[4, ], seq_along(node_set),
          type = "n",
          xaxt = "n", yaxt = "n",
@@ -155,14 +158,14 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
          las = plot_set$las,
          bty = plot_set$bty,
          ...)
-    axis(1)
+    axis(1,
+         las = plot_set$las)
     mtext("Estimated production",
-          side = 1, adj = 0.5, line = 3.1,
-          las = plot_set$las)
-    axis(2, at = seq_along(node_set), labels = colnames(to_plot))
+          side = 1, adj = 0.5, line = 3.1)
+    axis(2, at = seq_along(node_set), labels = colnames(to_plot),
+         las = plot_set$las)
     mtext("Node",
-          side = 2, adj = 0.5, line = 3.1,
-          las = plot_set$las)
+          side = 2, adj = 0.5, line = 9.2)
     
     for (k in seq_len(3)) {
       for (j in seq_along(node_set)) {
@@ -176,6 +179,8 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
     points(to_plot[4, ], seq_along(node_set),
            pch = plot_set$pch,
            col = plot_set$col)
+    
+    par(mar = old_mar)
     
   }
   

@@ -71,7 +71,7 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
   if (pb_ratio$type == "stochastic") {
      
     stochastic_pb <- sample(pb_ratio$values,
-                            size = ncol(production_estimates[[1]]),
+                            size = ncol(production_estimates$production[[1]]),
                             replace = TRUE,
                             prob = pb_ratio$probs)    
     biomass <- lapply(production_estimates$production,
