@@ -143,9 +143,9 @@ is.trophic_dynamics <- function (x) {
 #' }
 
 print.trophic_dynamics <- function (x, ...) {
-  cat(paste0("This is a trophic_dynamics object with ", x$food_web$nsp, " species, ",
-             x$efficiency_matrix$type, " efficiency matrix, and ",
-             x$dominance_matrix$type, " dominance matrix"))
+  cat(paste0("This is a trophic_dynamics object with ", x$food_web[[1]]$nsp, " species, ",
+             x$efficiency_matrix[[1]]$type, " efficiency matrix, and ",
+             x$dominance_matrix[[1]]$type, " dominance matrix"))
 }
 
 #' @rdname trophic_dynamics
@@ -163,12 +163,12 @@ print.trophic_dynamics <- function (x, ...) {
 plot.trophic_dynamics <- function (x, ...) {
   
   # create an igraph object from the adjacency matrix
-  fw_graph <- igraph::graph_from_adjacency_matrix(x$food_web$interaction_matrix,
+  fw_graph <- igraph::graph_from_adjacency_matrix(x$food_web[[1]]$interaction_matrix,
                                                   weighted = TRUE,
                                                   mode = "directed")
   
   # set sizes of vertices based on dominance
-  vertex_size <- rep(20, ncol(x$food_web$interaction_matrix))
+  vertex_size <- rep(20, ncol(x$food_web[[1]]$interaction_matrix))
 
   # set width of edges based on probability of interactions
   edge_width <- 3 * igraph::E(fw_graph)$weight

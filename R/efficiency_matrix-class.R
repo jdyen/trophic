@@ -29,7 +29,8 @@
 #' 
 #' # Construct the efficiency object
 #' test_efficiency_scalar <- build_efficiency_matrix(efficiency_mean = 0.1,
-#'                                                   efficiency_sd = 0.05)
+#'                                                   efficiency_sd = 0.05,
+#'                                                   nsp = 10)
 #' 
 #' # Vector example
 #' efficiency_vector <- data(example_efficiency_vector)

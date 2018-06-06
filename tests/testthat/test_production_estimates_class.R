@@ -1,21 +1,23 @@
 context('production_estimates class')
 
+SW <- suppressWarnings
+
 capture.output(
-  test_fw <- build_food_web(interaction_matrix = food_web),
-  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-                                                    efficiency_sd = 0.01),
-  test_dominance <- build_dominance_matrix(dominance = dominance_matrix),
-  test_fw2 <- build_food_web(interaction_matrix = list(food_web, food_web)),
-  test_efficiency_matrix2 <- build_efficiency_matrix(efficiency_mean = list(efficiency_mean,
-                                                                            efficiency_mean),
-                                                    efficiency_sd = 0.01),
-  test_dominance2 <- build_dominance_matrix(dominance = list(dominance_matrix,
-                                                             dominance_matrix)),
-  test_primary_producers <- build_primary_producers(production_mean = production_mean,
-                                                    production_sd = production_sd),
-  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
-                                                  efficiency_matrix = test_efficiency_matrix,
-                                                  dominance_matrix = test_dominance)
+  SW(test_fw <- build_food_web(interaction_matrix = food_web)),
+  SW(test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                       efficiency_sd = 0.01)),
+  SW(test_dominance <- build_dominance_matrix(dominance = dominance_matrix)),
+  SW(test_fw2 <- build_food_web(interaction_matrix = list(food_web, food_web))),
+  SW(test_efficiency_matrix2 <- build_efficiency_matrix(efficiency_mean = list(efficiency_mean,
+                                                                               efficiency_mean),
+                                                        efficiency_sd = 0.01)), 
+  SW(test_dominance2 <- build_dominance_matrix(dominance = list(dominance_matrix,
+                                                                dominance_matrix))), 
+  SW(test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                       production_sd = production_sd)),
+  SW(test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                     efficiency_matrix = test_efficiency_matrix,
+                                                     dominance_matrix = test_dominance))
 )
 
 test_that('estimate matches expected values in fixed case', {

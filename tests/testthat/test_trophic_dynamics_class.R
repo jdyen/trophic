@@ -74,34 +74,27 @@ test_that('plot works', {
 
 test_that('errors work if build_trophic_dynamics inputs are wrong', {
   
-  expect_output(build_trophic_dynamics(food_web = rnorm(100),
-                                       efficiency_matrix = test_efficiency_matrix,
-                                       dominance_matrix = test_dominance),
-                "food_web object must be a single food_web object")
-  expect_output(build_trophic_dynamics(food_web = list(rnorm(100), test_fw),
-                                       efficiency_matrix = test_efficiency_matrix,
-                                       dominance_matrix = test_dominance),
-                "food_web object must be a single food_web object")
-  expect_output(build_trophic_dynamics(food_web = test_fw,
-                                       efficiency_matrix = rnorm(100),
-                                       dominance_matrix = test_dominance),
-                "efficiency_matrix must be a single efficiency_matrix object")
-  expect_output(build_trophic_dynamics(food_web = test_fw,
-                                       efficiency_matrix = list(rnorm(100), test_efficiency_matrix),
-                                       dominance_matrix = test_dominance),
-                "efficiency_matrix must be a single efficiency_matrix object")
-  expect_output(build_trophic_dynamics(food_web = test_fw,
-                                       efficiency_matrix = test_efficiency_matrix,
-                                       dominance_matrix = rnorm(100)),
-                "dominance_matrix must be a single dominance_matrix object")
-  expect_output(build_trophic_dynamics(food_web = test_fw,
-                                       efficiency_matrix = test_efficiency_matrix,
-                                       dominance_matrix = list(rnorm(100), test_dominance)),
-                "dominance_matrix must be a single dominance_matrix object")
-  expect_output(build_trophic_dynamics(food_web = list(test_fw, test_fw, test_fw),
-                                       efficiency_matrix = list(test_efficiency_matrix,
-                                                                test_efficiency_matrix),
-                                       dominance_matrix = test_dominance),
-                "any values greater than one should be equal")
+  expect_error(build_trophic_dynamics(food_web = rnorm(100),
+                                      efficiency_matrix = test_efficiency_matrix,
+                                      dominance_matrix = test_dominance))
+  expect_error(build_trophic_dynamics(food_web = list(rnorm(100), test_fw),
+                                      efficiency_matrix = test_efficiency_matrix,
+                                      dominance_matrix = test_dominance)) 
+  expect_error(build_trophic_dynamics(food_web = test_fw,
+                                      efficiency_matrix = rnorm(100), 
+                                      dominance_matrix = test_dominance))
+  expect_error(build_trophic_dynamics(food_web = test_fw,
+                                      efficiency_matrix = list(rnorm(100), test_efficiency_matrix),
+                                      dominance_matrix = test_dominance)) 
+  expect_error(build_trophic_dynamics(food_web = test_fw,
+                                      efficiency_matrix = test_efficiency_matrix,
+                                      dominance_matrix = rnorm(100)))
+  expect_error(build_trophic_dynamics(food_web = test_fw,
+                                      efficiency_matrix = test_efficiency_matrix,
+                                      dominance_matrix = list(rnorm(100), test_dominance))) 
+  expect_error(build_trophic_dynamics(food_web = list(test_fw, test_fw, test_fw),
+                                      efficiency_matrix = list(test_efficiency_matrix,
+                                                               test_efficiency_matrix),
+                                      dominance_matrix = test_dominance))
   
 })

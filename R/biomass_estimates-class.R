@@ -268,6 +268,10 @@ extract_nodes <- function (x, nodes = NULL, FUN = summary, ...) {
       
   }
   
+  if (is.character(nodes)) {
+    names(out) <- nodes
+  }
+  
   out
   
 }
