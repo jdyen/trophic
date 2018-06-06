@@ -4,7 +4,8 @@ test_that('print works', {
 
   source('helpers.R')
 
-  #test_fw <- something
+  test_fw <- matrix(rbinom(16, size = 1, p = 0.5), ncol = 4)
+  test_fw <- test_fw * lower.tri(test_fw)
   
   # print method
   expected_output <- "This is a fixed food_web object with 4 species"
