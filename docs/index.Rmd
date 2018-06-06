@@ -30,7 +30,7 @@ The `trophic` R package is a set of tools to connect trophic interaction network
 
 
 ## more information
-The [examples](docs/examples.html) has a set of example `trophic` analyses. If you'd like to contribute, check out the [contributions](docs/contribute.html) page. 
+The [examples](examples.html) has a set of example `trophic` analyses. If you'd like to contribute, check out the [contributions](contribute.html) page. 
 
 
 ## basic example
