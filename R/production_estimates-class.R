@@ -149,16 +149,20 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
     
     plot(to_plot[4, ], seq_along(node_set),
          type = "n",
-         xaxt = "n",
-         yaxt = "n",
+         xaxt = "n", yaxt = "n",
+         xlab = "", ylab = "",
          xlim = range(to_plot),
          las = plot_set$las,
          bty = plot_set$bty,
          ...)
     axis(1)
-    mtext("Estimated production", side = 1, adj = 0.5, line = 3.5)
+    mtext("Estimated production",
+          side = 1, adj = 0.5, line = 3.1,
+          las = plot_set$las)
     axis(2, at = seq_along(node_set), labels = colnames(to_plot))
-    mtext("Node", side = 2, adj = 0.5, line = 4.5)
+    mtext("Node",
+          side = 2, adj = 0.5, line = 3.1,
+          las = plot_set$las)
     
     for (k in seq_len(3)) {
       for (j in seq_along(node_set)) {

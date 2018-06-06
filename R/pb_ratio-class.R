@@ -39,6 +39,7 @@ build_pb_ratio <- function (range, length = NULL, probs = NULL, type = "stochast
       if (is.null(probs)) {
         warning("Using fixed pb_ratio; cannot set gradient pb_ratio if length is NULL")
         values <- mean(range)
+        type <- "fixed"
       } else {
         warning("Using probs to determine gradient length because length argument is NULL")
         values <- seq(range[1], range[2], length = length(probs))
@@ -52,9 +53,11 @@ build_pb_ratio <- function (range, length = NULL, probs = NULL, type = "stochast
       if (is.null(length)) {
         warning("Using fixed pb_ratio; cannot set gradient pb_ratio if length is NULL")
         values <- mean(range)
+        type <- "fixed"
       } else {
         warning("Using gradient pb_ratio; cannot set stochastic pb_ratio is probs is NULL")
         values <- seq(range[1], range[2], length = length)
+        type <- "gradient"
       }
     } else {
       values <- seq(range[1], range[2], length = length(probs))
