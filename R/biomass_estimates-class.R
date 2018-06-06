@@ -7,13 +7,16 @@
 #' @param production_estimates a production_estimates object calculated with \link[trophic]{production_estimates}
 #' @param pb_ratio a production:biomass ratio object created with \link[trophic]{pb_ratio}
 #' @param x a biomass_estimates object
+#' @param nodes integer or integer vector of nodes to plot (indexed by food_web row)
+#' @param settings plot settings passed directly to \link[graphics]{plot}
 #' @param ... further arguments passed to or from other methods
 #'
 #' @return An object of class \code{biomass_estimates}
 #'
 #' @export
 #' 
-#' @importFrom graphics lines plot points axis mtext
+#' @importFrom stats quantile
+#' @importFrom graphics lines plot points axis mtext par
 #' 
 #' @examples
 #'

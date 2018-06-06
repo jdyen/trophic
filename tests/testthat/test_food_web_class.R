@@ -10,7 +10,7 @@ test_that('print works', {
   
   # print method
   expected_output <- "This is a fixed food_web object with 4 species"
-  expect_identical(print(test_fw), expected_output)
+  expect_output(print(test_fw), expected_output)
 
 })
 

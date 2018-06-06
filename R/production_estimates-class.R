@@ -9,6 +9,8 @@
 #' @param stochastic a character vector naming the stochastic elements of the trophic projection; can be any combination of "food_web", "efficiency", and "primary_production"
 #' @param nsim number of estimates to generate
 #' @param x a production_estimates object
+#' @param nodes integer or integer vector of nodes to plot (indexed by food_web row)
+#' @param settings plot settings passed directly to \link[graphics]{plot}
 #' @param ... further arguments passed to or from other methods
 #'
 #' @return An object of class \code{production_estimates}
@@ -18,8 +20,8 @@
 #' @importFrom future plan multiprocess future values
 #' @importFrom future.apply future_lapply
 #' @importFrom truncnorm rtruncnorm
-#' @importFrom stats rbinom
-#' @importFrom graphics lines plot points axis mtext
+#' @importFrom stats rbinom quantile
+#' @importFrom graphics lines plot points axis mtext par
 #'
 #' @examples
 #'
