@@ -126,7 +126,8 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
                    las = 1,
                    bty = "l",
                    col = "black",
-                   barwidth = c(1, 1.5, 2.6))
+                   barwidth = c(1, 1.5, 2.6),
+                   mar = c(5.1, 10.1, 2.1, 1.1))
   plot_set[names(settings)] <- settings
   
   for (i in seq_len(nplot)) {
@@ -148,7 +149,7 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
     }
     
     old_mar <- par()$mar
-    par(mar = c(5.1, 10.1, 2.1, 1.1))
+    par(mar = plot_set$mar)
     
     plot(to_plot[4, ], seq_along(node_set),
          type = "n",
