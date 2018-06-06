@@ -27,28 +27,25 @@
 #' 
 #' # Load a pre-compiled food_web object
 #' 
-#' # Scalar example
-#' efficiency <- data(example_efficiency_scalar)
-#' 
 #' # Construct the efficiency object
-#' test_efficiency_scalar <- build_efficiency_matrix(efficiency_mean = efficiency,
-#'                                                   efficiency_sd = 0.1)
+#' test_efficiency_scalar <- build_efficiency_matrix(efficiency_mean = 0.1,
+#'                                                   efficiency_sd = 0.05)
 #' 
 #' # Vector example
 #' efficiency_vector <- data(example_efficiency_vector)
-#' test_efficiency_vector <- build_efficiency_matrix(efficiency_mean = efficiency_vector,
-#'                                                   efficiency_sd = 0.1)
+#' test_efficiency_vector <- build_efficiency_matrix(efficiency_mean = efficiency_mean[1, ],
+#'                                                   efficiency_sd = 0.05)
 #' 
 #' # Matrix example 1: fixed standard deviation
 #' efficiency_mean <- data(example_efficiency_matrix)
 #' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-#'                                                   efficiency_sd = 0.1)
+#'                                                   efficiency_sd = 0.05)
 #' 
 #' # Matrix example 2: changing standard deviation
 #' efficiency_mean <- data(example_efficiency_matrix)
 #' efficiency_sd <- data(example_efficiency_sd)
 #' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-#'                                                   efficiency_sd = efficiency_sd)
+#'                                                   efficiency_sd = (0.5 * efficiency_mean))
 
 build_efficiency_matrix <- function (efficiency_mean, efficiency_sd = NULL, nsp = NULL, ...) {
   

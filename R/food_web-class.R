@@ -20,10 +20,6 @@
 #' 
 #' library(trophic)
 #' 
-#' # Load a pre-compiled food_web object
-#' 
-#' food_web <- data(example_food_web)
-#' 
 #' # Construct the food_web object
 #' 
 #' test_fw <- build_food_web(interaction_matrix = food_web)

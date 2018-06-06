@@ -20,18 +20,11 @@
 #' 
 #' library(trophic)
 #' 
-#' # Load pre-compiled food_web, efficiency_matrix, and dominance_matrix objects
-#' 
-#' food_web <- data(example_food_web)
-#' dominance <- data(example_dominance_matrix)
-#' efficiency_mean <- data(example_efficiency_matrix)
-#' efficiency_sd <- data(example_efficiency_sd)
-#' 
 #' # Construct the component objects
 #' test_fw <- build_food_web(interaction_matrix = food_web)
 #' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-#'                                                   efficiency_sd = efficiency_sd)
-#' test_dominance <- build_dominance_matrix(dominance = dominance)
+#'                                                   efficiency_sd = 0.01)
+#' test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
 #' 
 #' # Construct the trophic_dynamics object
 #' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,

@@ -24,18 +24,11 @@
 #' library(future)
 #' plan(multiprocess)
 #'
-#' # Load pre-compiled food_web, efficiency_matrix, and dominance_matrix objects
-#' 
-#' food_web <- data(example_food_web)
-#' dominance <- data(example_dominance_matrix)
-#' efficiency_mean <- data(example_efficiency_matrix)
-#' efficiency_sd <- data(example_efficiency_sd)
-#' 
 #' # Construct the component objects
 #' test_fw <- build_food_web(interaction_matrix = food_web)
 #' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-#'                                                   efficiency_sd = efficiency_sd)
-#' test_dominance <- build_dominance_matrix(dominance = dominance)
+#'                                                   efficiency_sd = 0.01)
+#' test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
 #' test_primary_producers <- build_primary_producers(production_mean = c(1, 2),
 #'                                                   production_sd = c(0.5, 0.5))
 #' 
@@ -45,10 +38,12 @@
 #'                                                 dominance_matrix = test_dominance)
 #'
 #' # Estimate production values from constructed trophic_dynamics object
-#' production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
+#' production_estimates <- estimate_production(test_trophic_dynamics,
+#'                                             test_primary_producers)
 #' 
 #' # Create a pb_ratio object
-#' test_pb_ratio <- build_pb_ratio(range = c(0.25, 5.75), probs = c(5, 20, 10, 3, 1, 1, 1))
+#' test_pb_ratio <- build_pb_ratio(range = c(0.25, 5.75),
+#'                                 probs = c(5, 20, 10, 3, 1, 1, 1))
 #' 
 #' # Convert production to biomass estimates
 #' biomass_estimates <- estimate_biomass(production_estimates, test_pb_ratio)
