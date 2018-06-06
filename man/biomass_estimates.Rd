@@ -5,6 +5,7 @@
 \alias{is.biomass_estimates}
 \alias{print.biomass_estimates}
 \alias{plot.biomass_estimates}
+\alias{extract_nodes}
 \title{Estimate biomass for each node in a food web}
 \usage{
 estimate_biomass(production_estimates, pb_ratio)
@@ -14,6 +15,8 @@ is.biomass_estimates(x)
 \method{print}{biomass_estimates}(x, ...)
 
 \method{plot}{biomass_estimates}(x, nodes = NULL, settings = list(), ...)
+
+extract_nodes(x, nodes = NULL, FUN = summary, ...)
 }
 \arguments{
 \item{production_estimates}{a production_estimates object calculated with \link[trophic]{production_estimates}}
@@ -24,9 +27,11 @@ is.biomass_estimates(x)
 
 \item{...}{further arguments passed to or from other methods}
 
-\item{nodes}{integer or integer vector of nodes to plot (indexed by food_web row)}
+\item{nodes}{integer, character, integer vector, or character vector of nodes to plot (indexed by name or food_web row)}
 
 \item{settings}{plot settings passed directly to \link[graphics]{plot}}
+
+\item{FUN}{function used to summarise information extracted from a biomass_estimates object}
 }
 \value{
 An object of class \code{biomass_estimates}
@@ -80,5 +85,11 @@ print(x)
 
 \dontrun{
 plot(x)
+}
+
+# Extract information on one or several nodes from a 'biomass_estimates' object
+
+\dontrun{
+extract_nodes(x, nodes = c(5:7), FUN = mean)
 }
 }

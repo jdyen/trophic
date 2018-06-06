@@ -50,6 +50,14 @@ predicted_biomass <- estimate_biomass(production_estimates = predicted_productio
 # plot biomass for nodes of interest
 plot(predicted_biomass, nodes = c(16:19))
 
+# extract mean of biomass for a single node of interest
+fish_biomass_mean <- extract_nodes(predicted_biomass, nodes = "large.bodied.native.fish",
+                                   FUN = mean)
+
+# extract quantiles of biomass for a single node of interest
+fish_biomass_quantiles <- extract_nodes(predicted_biomass, nodes = "large.bodied.native.fish",
+                                        FUN = quantile, p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
+
 ```
 
 ## example: predicting biomass of a high-order predator with uncertain food web
