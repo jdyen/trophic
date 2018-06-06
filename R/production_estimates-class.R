@@ -133,14 +133,19 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
       node_set <- nodes
     }
     
-    if (length(node_set) == 1) {
+    if ((length(node_set) == 1) & (ncol(x$production[[i]]) > 1)) {
       to_plot <- quantile(x$production[[i]],
                           p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
       to_plot <- matrix(to_plot, ncol = 1)
       colnames(to_plot) <- rownames(x$production[[i]])[node_set]
     } else {
-      to_plot <- apply(x$production[[i]][node_set, ], 1, quantile,
-                       p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
+      if (ncol(x$production[[i]]) == 1) {
+        to_plot <- matrix(rep(x$production[[i]], times = 7), 
+                          nrow = 7, byrow = TRUE)
+      } else {
+        to_plot <- apply(x$production[[i]][node_set, ], 1, quantile,
+                         p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
+      }
     }
     
     old_mar <- par()$mar
@@ -211,7 +216,7 @@ estimate <- function(i,
   spnames <- rownames(food_web$interaction_matrix)
   primary_producer_id <- match(primary_producers$names, spnames)
   if (any(is.na(primary_producer_id))) {
-    primary_producer_id <- seq_len(length(primary_producers))
+    primary_producer_id <- seq_len(primary_producers$n)
     warning(paste0("names of primary_producers do not match nodes in food_web; primary_producers are assumed to be the first ",
                    length(primary_producers),
                    " nodes of food_web"))

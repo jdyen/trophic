@@ -65,7 +65,7 @@ test_that('plot works', {
   test_fw <- matrix(rbinom(16, size = 1, p = 0.5), ncol = 4)
   test_fw <- test_fw * lower.tri(test_fw)
   test_fw <- build_food_web(test_fw)
-  expect_silent(test_fw)
+  expect_silent(plot(test_fw))
 
 })
 
