@@ -143,7 +143,7 @@ plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) 
       to_plot <- matrix(to_plot, ncol = 1)
       colnames(to_plot) <- rownames(x$production[[i]])[node_set]
     } else {
-      to_plot <- apply(x$production[[i]], 1, quantile,
+      to_plot <- apply(x$production[[i]][node_set, ], 1, quantile,
                        p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
     }
     
