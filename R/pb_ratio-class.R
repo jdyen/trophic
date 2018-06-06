@@ -14,6 +14,8 @@
 #' @return An object of class \code{pb_ratio}
 #' 
 #' @export
+#' 
+#' @importFrom graphics plot lines points
 #'
 #' @examples
 #' 

@@ -4,6 +4,7 @@
 \alias{estimate_production}
 \alias{is.production_estimates}
 \alias{print.production_estimates}
+\alias{plot.production_estimates}
 \title{Estimate production for each node in a food web}
 \usage{
 estimate_production(trophic_dynamics, primary_producers,
@@ -13,11 +14,15 @@ estimate_production(trophic_dynamics, primary_producers,
 is.production_estimates(x)
 
 \method{print}{production_estimates}(x, ...)
+
+\method{plot}{production_estimates}(x, nodes = NULL, settings = list(), ...)
 }
 \arguments{
 \item{trophic_dynamics}{a dynamics object - food web, trophic efficiency, trophic dominance, and P:B ratios}
 
 \item{primary_producers}{a primary_producers object containing estimates of primary production}
+
+\item{stochastic}{a character vector naming the stochastic elements of the trophic projection; can be any combination of "food_web", "efficiency", and "primary_production"}
 
 \item{nsim}{number of estimates to generate}
 
@@ -46,12 +51,16 @@ efficiency_sd <- data(example_efficiency_sd)
 
 # Construct the component objects
 test_fw <- build_food_web(interaction_matrix = food_web)
-test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = efficiency_sd)
+test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                  efficiency_sd = efficiency_sd)
 test_dominance <- build_dominance_matrix(dominance = dominance)
-test_primary_producers <- build_primary_producers(production_mean = c(1, 2), production_sd = c(0.5, 0.5))
+test_primary_producers <- build_primary_producers(production_mean = c(1, 2),
+                                                  production_sd = c(0.5, 0.5))
 
 # Construct the trophic_dynamics object
-test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
+test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                efficiency_matrix = test_efficiency_matrix,
+                                                dominance_matrix = test_dominance)
 
 # Estimate production values from constructed trophic_dynamics object
 production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
@@ -63,4 +72,8 @@ is.production_estimates(x)
 # Print information about the 'production_estimates' object
 
 print(x)
+
+# Plot a 'production_estimates' object
+
+plot(x)
 }

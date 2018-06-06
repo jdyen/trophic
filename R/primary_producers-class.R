@@ -19,7 +19,8 @@
 #' 
 #' # Construct the primary_producers object
 #' 
-#' test_producers <- build_primary_producers(production_mean = c(1, 2, 3), production_sd = c(0.1, 0.5, 0.2))
+#' test_producers <- build_primary_producers(production_mean = c(1, 2, 3),
+#'                                           production_sd = c(0.1, 0.5, 0.2))
 
 build_primary_producers <- function (production_mean, production_sd, ...) {
   

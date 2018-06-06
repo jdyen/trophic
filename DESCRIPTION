@@ -9,7 +9,7 @@ Authors@R: as.person(c(
     "Jim Thomson <jim.thomson@delwp.vic.gov.au> [ctb]"
   ))
 Description: Use complete or partial food webs to predict energy flows to any level of an ecosystem. Link available energy to carrying capacity in abundance and biomass using complete or partial size-abundance distributions. 
-License: Apache License 2.0
+License: file LICENSE 
 URL: https://github.com/jdyen/trophic
 BugReports: https://github.com/jdyen/trophic/issues
 Encoding: UTF-8

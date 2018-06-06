@@ -6,6 +6,7 @@
 #' @rdname dominance_matrix
 #' 
 #' @param dominance a matrix (or NULL object) identifying the relative dominance of a species over other species feeding off the same resource
+#' @param nsp the number of species; required if dominance is NULL (in which case a flat dominance matrix is returned)
 #' @param x an object to print or test as a dominance_matrix object
 #' @param ... further arguments passed to or from other methods
 #'

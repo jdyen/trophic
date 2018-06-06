@@ -15,6 +15,8 @@ is.dominance_matrix(x)
 \arguments{
 \item{dominance}{a matrix (or NULL object) identifying the relative dominance of a species over other species feeding off the same resource}
 
+\item{nsp}{the number of species; required if dominance is NULL (in which case a flat dominance matrix is returned)}
+
 \item{...}{further arguments passed to or from other methods}
 
 \item{x}{an object to print or test as a dominance_matrix object}

@@ -5,6 +5,7 @@
 #' @rdname biomass_estimates
 #'
 #' @param production_estimates a production_estimates object calculated with \link[trophic]{production_estimates}
+#' @param pb_ratio a production:biomass ratio object created with \link[trophic]{pb_ratio}
 #' @param x a biomass_estimates object
 #' @param ... further arguments passed to or from other methods
 #'
@@ -12,8 +13,6 @@
 #'
 #' @export
 #' 
-#' @importFrom future plan multiprocess future values
-#'
 #' @examples
 #'
 #' library(trophic)
@@ -29,12 +28,16 @@
 #' 
 #' # Construct the component objects
 #' test_fw <- build_food_web(interaction_matrix = food_web)
-#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = efficiency_sd)
+#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+#'                                                   efficiency_sd = efficiency_sd)
 #' test_dominance <- build_dominance_matrix(dominance = dominance)
-#' test_primary_producers <- build_primary_producers(production_mean = c(1, 2), production_sd = c(0.5, 0.5))
+#' test_primary_producers <- build_primary_producers(production_mean = c(1, 2),
+#'                                                   production_sd = c(0.5, 0.5))
 #' 
 #' # Construct the trophic_dynamics object
-#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
+#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+#'                                                 efficiency_matrix = test_efficiency_matrix,
+#'                                                 dominance_matrix = test_dominance)
 #'
 #' # Estimate production values from constructed trophic_dynamics object
 #' production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
@@ -50,29 +53,35 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
   # switch on type of pb_ratio object
   if (pb_ratio$type == "fixed") {
     
-    biomass_estimates <- lapply(production_estimates, function(x) x * (10 / pb_ratio$values))
+    biomass <- lapply(production_estimates$production,
+                      function(x) x * (10 / pb_ratio$values))
     
-  }
+  } 
   
   if (pb_ratio$type == "gradient") {
     
-    biomass_estimates <- vector("list", length = length(pb_ratio$values))
+    biomass <- vector("list", length = length(pb_ratio$values))
     for (i in seq_along(pb_ratio$values)) {
-      biomass_estimates <- lapply(production_estimates, function(x) x * (10 / pb_ratio$values[i]))
-    }
+      biomass <- lapply(production_estimates$production,
+                        function(x) x * (10 / pb_ratio$values[i]))
+    } 
     
-  }
+  } 
   
   if (pb_ratio$type == "stochastic") {
-
+     
     stochastic_pb <- sample(pb_ratio$values,
                             size = ncol(production_estimates[[1]]),
                             replace = TRUE,
                             prob = pb_ratio$probs)    
-    biomass_estimates <- lapply(production_estimates, function(x) sweep(x, 2, 10 / stochastic_pb, "*"))
+    biomass <- lapply(production_estimates$production,
+                      function(x) sweep(x, 2, 10 / stochastic_pb, "*")) 
     
   }
-
+   
+  biomass_estimates <- list(biomass = biomass,
+                            replicates = production_estimates$replicates)
+  
   as.biomass_estimates(biomass_estimates)
   
 }

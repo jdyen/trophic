@@ -6,6 +6,7 @@
 #'
 #' @param trophic_dynamics a dynamics object - food web, trophic efficiency, trophic dominance, and P:B ratios
 #' @param primary_producers a primary_producers object containing estimates of primary production
+#' @param stochastic a character vector naming the stochastic elements of the trophic projection; can be any combination of "food_web", "efficiency", and "primary_production"
 #' @param nsim number of estimates to generate
 #' @param x a production_estimates object
 #' @param ... further arguments passed to or from other methods
@@ -17,6 +18,8 @@
 #' @importFrom future plan multiprocess future values
 #' @importFrom future.apply future_lapply
 #' @importFrom truncnorm rtruncnorm
+#' @importFrom stats rbinom
+#' @importFrom graphics lines plot points axis mtext
 #'
 #' @examples
 #'
@@ -33,12 +36,16 @@
 #' 
 #' # Construct the component objects
 #' test_fw <- build_food_web(interaction_matrix = food_web)
-#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = efficiency_sd)
+#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+#'                                                   efficiency_sd = efficiency_sd)
 #' test_dominance <- build_dominance_matrix(dominance = dominance)
-#' test_primary_producers <- build_primary_producers(production_mean = c(1, 2), production_sd = c(0.5, 0.5))
+#' test_primary_producers <- build_primary_producers(production_mean = c(1, 2),
+#'                                                   production_sd = c(0.5, 0.5))
 #' 
 #' # Construct the trophic_dynamics object
-#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
+#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+#'                                                 efficiency_matrix = test_efficiency_matrix,
+#'                                                 dominance_matrix = test_dominance)
 #'
 #' # Estimate production values from constructed trophic_dynamics object
 #' production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers)
@@ -58,13 +65,16 @@ estimate_production <- function(trophic_dynamics,
   }
 
   # parallelise estimates for multiple food webs
-  production_estimates <- future.apply::future_lapply(seq_len(replicates),
-                                                      FUN = estimate,
-                                                      trophic_dynamics = trophic_dynamics,
-                                                      primary_producers = primary_producers,
-                                                      stochastic = stochastic,
-                                                      nsim = nsim,
-                                                      future.seed = FALSE)
+  production <- future.apply::future_lapply(seq_len(replicates),
+                                            FUN = estimate,
+                                            trophic_dynamics = trophic_dynamics,
+                                            primary_producers = primary_producers,
+                                            stochastic = stochastic,
+                                            nsim = nsim,
+                                            future.seed = FALSE)
+  
+  production_estimates <- list(production = production,
+                               replicates = replicates)
   
   as.production_estimates(production_estimates)
    
@@ -95,9 +105,77 @@ is.production_estimates <- function (x) {
 #' print(x)
 
 print.production_estimates <- function (x, ...) {
-  cat(paste0("This is a production_estimates object with ", length(x), " replicates"))
+  cat(paste0("This is a production_estimates object with ", x$replicates, " replicates"))
 }
 
+#' @rdname production_estimates
+#'
+#' @export
+#'
+#' @examples
+#' 
+#' # Plot a 'production_estimates' object
+#'
+#' plot(x)
+
+plot.production_estimates <- function (x, nodes = NULL, settings = list(), ...) {
+
+  nplot <- x$replicates
+  
+  plot_set <- list(pch = 16,
+                   las = 1,
+                   bty = "l",
+                   col = "black",
+                   barwidth = c(1, 1.5, 2.6))
+  plot_set[names(settings)] <- settings
+  
+  for (i in seq_len(nplot)) {
+    
+    if (is.null(nodes)) {
+      node_set <- seq_len(nrow(x$production[[i]]))
+    } else {
+      node_set <- nodes
+    }
+    
+    if (length(node_set) == 1) {
+      to_plot <- quantile(x$production[[i]],
+                          p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
+      to_plot <- matrix(to_plot, ncol = 1)
+      colnames(to_plot) <- rownames(x$production[[i]])[node_set]
+    } else {
+      to_plot <- apply(x$production[[i]], 1, quantile,
+                       p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
+    }
+    
+    plot(to_plot[4, ], seq_along(node_set),
+         type = "n",
+         xaxt = "n",
+         yaxt = "n",
+         xlim = range(to_plot),
+         las = plot_set$las,
+         bty = plot_set$bty,
+         ...)
+    axis(1)
+    mtext("Estimated production", side = 1, adj = 0.5, line = 3.5)
+    axis(2, at = seq_along(node_set), labels = colnames(to_plot))
+    mtext("Node", side = 2, adj = 0.5, line = 4.5)
+    
+    for (k in seq_len(3)) {
+      for (j in seq_along(node_set)) {
+        lines(c(to_plot[k, j], to_plot[(8 - k), j]),
+              c(j, j),
+              lwd = plot_set$barwidth[k],
+              col = plot_set$col)  
+      }
+    }
+    
+    points(to_plot[4, ], seq_along(node_set),
+           pch = plot_set$pch,
+           col = plot_set$col)
+    
+  }
+  
+}
 
 # internal function: estimate one set of production values
 estimate <- function(i,

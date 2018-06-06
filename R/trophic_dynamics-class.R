@@ -14,6 +14,8 @@
 #' 
 #' @export
 #'
+#' @importFrom graphics plot
+#'
 #' @examples
 #' 
 #' library(trophic)
@@ -27,11 +29,14 @@
 #' 
 #' # Construct the component objects
 #' test_fw <- build_food_web(interaction_matrix = food_web)
-#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean, efficiency_sd = efficiency_sd)
+#' test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+#'                                                   efficiency_sd = efficiency_sd)
 #' test_dominance <- build_dominance_matrix(dominance = dominance)
 #' 
 #' # Construct the trophic_dynamics object
-#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw, efficiency_matrix = test_efficiency_matrix, dominance_matrix = test_dominance)
+#' test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+#'                                                 efficiency_matrix = test_efficiency_matrix,
+#'                                                 dominance_matrix = test_dominance)
 
 build_trophic_dynamics <- function (food_web, efficiency_matrix = NULL, dominance_matrix = NULL, ...) {
 
