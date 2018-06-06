@@ -19,6 +19,9 @@ Depends:
 Imports:
     igraph,
     future,    
+    future.apply,
+    stats,
+    graphics,
     truncnorm
 Suggests:
     knitr,
