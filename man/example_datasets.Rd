@@ -33,7 +33,6 @@ Example standard deviations of primary production data for seven primary sources
 }
 \examples{
 library(trophic)
-data(food_web)
 food_web_test <- build_food_web(food_web)
 plot(food_web_test)
 library(trophic)
