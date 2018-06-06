@@ -210,6 +210,12 @@ estimate <- function(i,
   # match primary producer names to food web
   spnames <- rownames(food_web$interaction_matrix)
   primary_producer_id <- match(primary_producers$names, spnames)
+  if (any(is.na(primary_producer_id))) {
+    primary_producer_id <- seq_len(length(primary_producers))
+    warning(paste0("names of primary_producers do not match nodes in food_web; primary_producers are assumed to be the first ",
+                   length(primary_producers),
+                   " nodes of food_web"))
+  }
   
   # create production output matrix
   production <- matrix(0, nrow = nsp, ncol = nsim)
@@ -226,7 +232,8 @@ estimate <- function(i,
     
   } else {
     
-    production[primary_producer_id, ] <- matrix(rep(primary_producers$mean, times = nsim),
+    production[primary_producer_id, ] <- matrix(rep(unlist(primary_producers$mean),
+                                                    times = nsim),
                                                 nrow = primary_producers$n)
     
   }
@@ -263,7 +270,7 @@ estimate <- function(i,
     nodeorder <- nodeorder[apply(food_web$interaction_matrix, 1, sum) > 0]
     for (node in nodeorder) {
       production[node, ] <- production[node, ] +
-        dominance_weights[node, ] %*% (efficiency[, node, ] * production)
+        dominance_weights[node, ] %*% (efficiency[node, , ] * production)
     }
 
   } else {
@@ -280,7 +287,7 @@ estimate <- function(i,
       nodeorder <- nodeorder[apply(food_web$interaction_matrix, 1, sum) > 0]
       for (node in nodeorder) {
         production[node, i] <- production[node, i] +
-          dominance_weights[node, ] %*% (efficiency[, node, i] * production[, i])
+          dominance_weights[node, ] %*% (efficiency[node, , i] * production[, i])
       }
       
     }

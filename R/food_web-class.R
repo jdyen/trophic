@@ -123,9 +123,15 @@ plot.food_web <- function (x, ...) {
                                                   weighted = TRUE,
                                                   mode = "directed")
   
+  # labels need to ignore disconnected nodes
+  label_subgraph <- rownames(x$interaction_matrix)
+  label_subgraph <- label_subgraph[!((apply(x$interaction_matrix, 1, sum) == 0) &
+                                       (apply(x$interaction_matrix, 2, sum) == 0))]
+  
   # plot the adjacency matrix
   plot(fw_graph,
        layout = layout_fw,
+       vertex.label = label_subgraph,
        ...)
   
 }
