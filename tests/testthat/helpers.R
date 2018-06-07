@@ -40,7 +40,7 @@ fixed_projection <- function(trophic_dynamics, primary_producers) {
   rownames(production) <- spnames
   
   # initialise production matrix
-  production[primary_producer_id, ] <- matrix(rep(primary_producers$mean, times = nsim),
+  production[primary_producer_id, ] <- matrix(rep(unlist(primary_producers$mean), times = nsim),
                                               nrow = primary_producers$n)
   
   # calculate dominance weights

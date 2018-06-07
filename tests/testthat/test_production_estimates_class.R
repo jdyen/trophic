@@ -22,9 +22,9 @@ test_that('estimate matches expected values in fixed case', {
   production_fixed <- fixed_projection(test_trophic_dynamics, test_primary_producers)
   
   # test within and among method equality
-  expect_equal(production_estimates$production[, 1], production_estimates$production[, 2])
-  expect_equal(production_estimates$production[, 1], production_fixed$production[, 1])
-  expect_equal(production_fixed$production[, 1], production_fixed$production[, 2])
+  expect_equal(production_estimates$production[[1]][, 1], production_estimates$production[[1]][, 2])
+  expect_equal(production_estimates$production[[1]][, 1], production_fixed[, 1])
+  expect_equal(production_fixed[, 1], production_fixed[, 2])
   
 })
 

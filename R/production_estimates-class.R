@@ -97,8 +97,9 @@ is.production_estimates <- function (x) {
 #' @examples
 #' 
 #' # Print information about the 'production_estimates' object
-#'
+#' \dontrun{
 #' print(x)
+#' }
 
 print.production_estimates <- function (x, ...) {
   cat(paste0("This is a production_estimates object with ", x$replicates, " replicates"))
