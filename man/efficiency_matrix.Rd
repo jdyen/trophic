@@ -55,13 +55,10 @@ test_efficiency_vector <- build_efficiency_matrix(efficiency_mean = efficiency_m
                                                   efficiency_sd = 0.05)
 
 # Matrix example 1: fixed standard deviation
-efficiency_mean <- data(example_efficiency_matrix)
 test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
                                                   efficiency_sd = 0.05)
 
 # Matrix example 2: changing standard deviation
-efficiency_mean <- data(example_efficiency_matrix)
-efficiency_sd <- data(example_efficiency_sd)
 test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
                                                   efficiency_sd = (0.5 * efficiency_mean))
 

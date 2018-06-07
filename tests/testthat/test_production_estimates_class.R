@@ -1,29 +1,19 @@
 context('production_estimates class')
 
-SW <- suppressWarnings
-
-capture.output(
-  SW(test_fw <- build_food_web(interaction_matrix = food_web)),
-  SW(test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
-                                                       efficiency_sd = 0.01)),
-  SW(test_dominance <- build_dominance_matrix(dominance = dominance_matrix)),
-  SW(test_fw2 <- build_food_web(interaction_matrix = list(food_web, food_web))),
-  SW(test_efficiency_matrix2 <- build_efficiency_matrix(efficiency_mean = list(efficiency_mean,
-                                                                               efficiency_mean),
-                                                        efficiency_sd = 0.01)), 
-  SW(test_dominance2 <- build_dominance_matrix(dominance = list(dominance_matrix,
-                                                                dominance_matrix))), 
-  SW(test_primary_producers <- build_primary_producers(production_mean = production_mean,
-                                                       production_sd = production_sd)),
-  SW(test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
-                                                     efficiency_matrix = test_efficiency_matrix,
-                                                     dominance_matrix = test_dominance))
-)
-
 test_that('estimate matches expected values in fixed case', {
   
   source('helpers.R')
-
+  
+  test_fw <- build_food_web(interaction_matrix = food_web)
+  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                    efficiency_sd = 0.01)
+  test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
+  test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                    production_sd = production_sd)
+  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                  efficiency_matrix = test_efficiency_matrix,
+                                                  dominance_matrix = test_dominance)
+   
   # estimate production values from constructed trophic_dynamics object
   production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers,
                                               stochastic = c("bananas"), nsim = 2)
@@ -39,6 +29,16 @@ test_that('estimate matches expected values in fixed case', {
 })
 
 test_that('estimate production works', {
+  
+  test_fw <- build_food_web(interaction_matrix = food_web)
+  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                    efficiency_sd = 0.01)
+  test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
+  test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                    production_sd = production_sd)
+  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                  efficiency_matrix = test_efficiency_matrix,
+                                                  dominance_matrix = test_dominance)
   
   # expect nsim = 1 and output if stochastic = NULL
   expect_output(estimate_production(test_trophic_dynamics, test_primary_producers,
@@ -71,29 +71,29 @@ test_that('estimate production works', {
                                     stochastic = c("food_web", "efficiency", "primary_production"), nsim = 3))
   
   # expect silent if multiple food webs, efficiencies, or dominances provided
-  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw2,
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
                                                    efficiency_matrix = test_efficiency_matrix,
                                                    dominance_matrix = test_dominance)
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
   test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
-                                                   efficiency_matrix = test_efficiency_matrix2,
+                                                   efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
                                                    dominance_matrix = test_dominance)
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
   test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
                                                    efficiency_matrix = test_efficiency_matrix,
-                                                   dominance_matrix = test_dominance2)
+                                                   dominance_matrix = list(test_dominance, test_dominance))
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
-  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw2,
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
                                                    efficiency_matrix = test_efficiency_matrix,
-                                                   dominance_matrix = test_dominance2)
+                                                   dominance_matrix = list(test_dominance, test_dominance))
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
-  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw2,
-                                                   efficiency_matrix = test_efficiency_matrix2,
-                                                   dominance_matrix = test_dominance2)
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
+                                                   efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
+                                                   dominance_matrix = list(test_dominance, test_dominance))
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
   
@@ -108,6 +108,16 @@ test_that('estimate production works', {
 
 test_that('print works', {
   
+  test_fw <- build_food_web(interaction_matrix = food_web)
+  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                    efficiency_sd = 0.01)
+  test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
+  test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                    production_sd = production_sd)
+  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                  efficiency_matrix = test_efficiency_matrix,
+                                                  dominance_matrix = test_dominance)
+
   production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers,
                                               stochastic = c("efficiency"), nsim = 2)
   
@@ -118,6 +128,16 @@ test_that('print works', {
 
 test_that('is.food_web works', {
   
+  test_fw <- build_food_web(interaction_matrix = food_web)
+  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                    efficiency_sd = 0.01)
+  test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
+  test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                    production_sd = production_sd)
+  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                  efficiency_matrix = test_efficiency_matrix,
+                                                  dominance_matrix = test_dominance)
+
   production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers,
                                               stochastic = c("efficiency"), nsim = 2)
   
@@ -133,6 +153,16 @@ test_that('is.food_web works', {
 })
 
 test_that('plot works', {
+
+  test_fw <- build_food_web(interaction_matrix = food_web)
+  test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                                    efficiency_sd = 0.01)
+  test_dominance <- build_dominance_matrix(dominance = dominance_matrix)
+  test_primary_producers <- build_primary_producers(production_mean = production_mean,
+                                                    production_sd = production_sd)
+  test_trophic_dynamics <- build_trophic_dynamics(food_web = test_fw,
+                                                  efficiency_matrix = test_efficiency_matrix,
+                                                  dominance_matrix = test_dominance)
   
   production_estimates <- estimate_production(test_trophic_dynamics, test_primary_producers,
                                               stochastic = c("efficiency"), nsim = 2)
