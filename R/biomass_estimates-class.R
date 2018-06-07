@@ -235,10 +235,8 @@ plot.biomass_estimates <- function (x, nodes = NULL, settings = list(), ...) {
 
 extract_nodes <- function (x, nodes = NULL, FUN = summary, ...) {
 
-  nbiomass <- x$replicates
-  
-  out <- vector("list", length = nbiomass)
-  for (i in seq_len(nbiomass)) {
+  out <- vector("list", length = x$replicates)
+  for (i in seq_len(x$replicates)) {
 
     if (is.null(nodes)) {
       node_set <- seq_len(nrow(x$biomass[[i]]))
@@ -273,9 +271,7 @@ extract_nodes <- function (x, nodes = NULL, FUN = summary, ...) {
       
   }
   
-  if (is.character(nodes)) {
-    names(out) <- nodes
-  }
+  names(out) <- paste0("replicate", seq_len(x$replicates))
   
   out
   
