@@ -15,7 +15,27 @@ The `trophic` package has several different uses. These are some examples of pos
 
 ## example: predicting biomass of a high-order predator with known food web
 
-This is a simple example where we have a known (or assumed) food web and some estimates of trophic transfer efficiencies. The food web additionally contains information on the relative dominance of consumers over potential competitors. This information is captured in the objects `food_web` (a lower triangular matrix of zeros and ones), `efficiency_mean` (a series of proportions for trophic transfer efficiencies), and `dominance_matrix` (a matrix of relative values for each consumer). If transfer efficiencies are unknown, they can be assumed to be 10% (0.1) by calling `build_trophic_dynamics()` with `efficiency_matrix = NULL`. Similarly, if dominance values are unknown, they can be assumed to be equal (all consumers will get an equal share of a shared resource) by setting `dominance_matrix = NULL` in the `build_trophic_dynamics()` function.
+This is a simple example where we have a known (or assumed) food web and some estimates of trophic transfer efficiencies. The food web additionally contains information on the relative dominance of consumers over potential competitors. This information is captured in the objects `food_web` (a lower triangular matrix of zeros and ones), `efficiency_mean` (a series of proportions for trophic transfer efficiencies), and `dominance_matrix` (a matrix of relative values for each consumer). In food webs in `trophic`, we assume that "rows eat columns", that is, a value in a given cell indicates that the node in that row eats the node in that column.
+
+```{r echo = FALSE, results="asis", warning=FALSE, error=FALSE, fig.width=10}
+# print the pre-installed example food web
+kableExtra::kable_styling(knitr::kable(food_web[13:19, 13:19], caption = "Example fixed food web"),
+                          full_width = FALSE, font_size = 14)
+```
+
+```{r echo = FALSE, results="asis", warning=FALSE, error=FALSE, fig.width=10}
+# print the pre-installed example food web
+kableExtra::kable_styling(knitr::kable(efficiency_mean[13:19, 13:19], caption = "Example efficiency matrix"),
+                          full_width = FALSE, font_size = 14)
+```
+
+```{r echo = FALSE, results="asis", warning=FALSE, error=FALSE, fig.width=10}
+# print the pre-installed example food web
+kableExtra::kable_styling(knitr::kable(dominance_matrix[13:19, 13:19], caption = "Example dominance matrix"),
+                          full_width = FALSE, font_size = 14)
+```
+
+If transfer efficiencies are unknown, they can be assumed to be 10% (0.1) by calling `build_trophic_dynamics()` with `efficiency_matrix = NULL`. Similarly, if dominance values are unknown, they can be assumed to be equal (all consumers will get an equal share of a shared resource) by setting `dominance_matrix = NULL` in the `build_trophic_dynamics()` function.
 
 We additionally have estimates of primary production (`production_mean` and `production_sd`) that we use to initialise the food web. These values are required for all models in `trophic`. Estimates of primary production can be collated into a `trophic` object with the `build_primary_producers()` function, which can take named vectors of means and standard deviations. Alternatively, if `production_mean` and `production_sd` are not named, the model will assume that production values correspond to the first columns in the food web (one column for each value in `production_mean` and `production_sd`).
 
@@ -92,7 +112,17 @@ fish_biomass_quantiles <- extract_nodes(predicted_biomass, nodes = "large.bodied
 ```
 
 ## example: predicting biomass of a high-order predator with uncertain food web
-We can repeat the previous example but account for uncertainty in the stucture of the food web. In this case, the interaction matrix takes values in [0, 1] rather than being equal exactly to zero or one. The production estimates are based on `nsim` replicates, with the food web drawn at random in each replicate based on the values (probabilities) in the interaction matrix.
+We can repeat the previous example but account for uncertainty in the stucture of the food web. In this case, the interaction matrix takes values in [0, 1] rather than being equal exactly to zero or one. For example, the example food web shown above can be altered so that links have a probability rather than definitely being present or absent.
+
+```{r echo = FALSE, results="asis", warning=FALSE, error=FALSE, fig.width=10}
+# print the pre-installed example food web
+to_print <- food_web[13:19, 13:19]
+to_print <- to_print * runif(length(to_print), min = 0.3, max = 1)
+kableExtra::kable_styling(knitr::kable(round(to_print, 2), caption = "Example stochastic food web"),
+                          full_width = FALSE, font_size = 14)
+```
+
+The production estimates are based on `nsim` replicates, with the food web drawn at random in each replicate based on the values (probabilities) in the interaction matrix.
 ```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
 
 # load trophic package

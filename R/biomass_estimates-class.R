@@ -80,9 +80,13 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
     
   }
    
-  # add extra info here and in estimate_production
   biomass_estimates <- list(biomass = biomass,
-                            replicates = production_estimates$replicates)
+                            replicates = production_estimates$replicates,
+                            trophic_dynamics = production_estimates$trophic_dynamics,
+                            primary_producers = production_estimates$primary_producers,
+                            pb_ratio = pb_ratio,
+                            stochastic = production_estimates$stochastic,
+                            nsim = production_estimates$nsim)
   
   as.biomass_estimates(biomass_estimates)
   

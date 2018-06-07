@@ -69,7 +69,11 @@ estimate_production <- function(trophic_dynamics,
                                             future.seed = FALSE)
   
   production_estimates <- list(production = production,
-                               replicates = replicates)
+                               replicates = replicates,
+                               trophic_dynamics = trophic_dynamics,
+                               primary_producers = primary_producers,
+                               stochastic = stochastic,
+                               nsim = nsim)
   
   as.production_estimates(production_estimates)
    
