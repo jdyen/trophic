@@ -63,10 +63,10 @@ test_that('extract_nodes works', {
   
   estimates <- estimate_biomass(production_estimates = production_estimates,
                                 pb_ratio = test_pb_ratio)
-  expect_silent(extract_nodes(estimates, nodes = 15))
   expect_silent(extract_nodes(estimates, nodes = "small.fish"))
   expect_silent(extract_nodes(estimates, nodes = c(15:18)))
   expect_silent(extract_nodes(estimates, nodes = c("small.fish", "large.bodied.native.fish")))
+  expect_error(extract_nodes(estimates, nodes = 15))
   expect_error(extract_nodes(estimates, nodes = c(5.1525, 2.25151)))
   
 })
