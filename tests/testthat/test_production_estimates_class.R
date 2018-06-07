@@ -76,26 +76,26 @@ test_that('estimate production works', {
                                                    dominance_matrix = test_dominance)
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
-  # test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
-  #                                                  efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
-  #                                                  dominance_matrix = test_dominance)
-  # expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
-  #                                   stochastic = c("efficiency"), nsim = 3))
-  # test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
-  #                                                  efficiency_matrix = test_efficiency_matrix,
-  #                                                  dominance_matrix = list(test_dominance, test_dominance))
-  # expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
-  #                                   stochastic = c("efficiency"), nsim = 3))
-  # test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
-  #                                                  efficiency_matrix = test_efficiency_matrix,
-  #                                                  dominance_matrix = list(test_dominance, test_dominance))
-  # expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
-  #                                   stochastic = c("efficiency"), nsim = 3))
-  # test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
-  #                                                  efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
-  #                                                  dominance_matrix = list(test_dominance, test_dominance))
-  # expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
-  #                                   stochastic = c("efficiency"), nsim = 3))
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
+                                                   efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
+                                                   dominance_matrix = test_dominance)
+  expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
+                                    stochastic = c("efficiency"), nsim = 3))
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = test_fw,
+                                                   efficiency_matrix = test_efficiency_matrix,
+                                                   dominance_matrix = list(test_dominance, test_dominance))
+  expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
+                                    stochastic = c("efficiency"), nsim = 3))
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
+                                                   efficiency_matrix = test_efficiency_matrix,
+                                                   dominance_matrix = list(test_dominance, test_dominance))
+  expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
+                                    stochastic = c("efficiency"), nsim = 3))
+  test_trophic_dynamics2 <- build_trophic_dynamics(food_web = list(test_fw, test_fw),
+                                                   efficiency_matrix = list(test_efficiency_matrix, test_efficiency_matrix),
+                                                   dominance_matrix = list(test_dominance, test_dominance))
+  expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
+                                    stochastic = c("efficiency"), nsim = 3))
   
   # expect warning if names of primary producers do not match node names
   new_producers <- test_primary_producers
