@@ -163,21 +163,9 @@ print.trophic_dynamics <- function (x, ...) {
 plot.trophic_dynamics <- function (x, ...) {
   
   # create an igraph object from the adjacency matrix
-  fw_graph <- igraph::graph_from_adjacency_matrix(x$food_web[[1]]$interaction_matrix,
-                                                  weighted = TRUE,
-                                                  mode = "directed")
-  
-  # set sizes of vertices based on dominance
-  vertex_size <- rep(20, ncol(x$food_web[[1]]$interaction_matrix))
-
-  # set width of edges based on probability of interactions
-  edge_width <- 3 * igraph::E(fw_graph)$weight
-  
-  # plot the adjacency matrix
-  plot(fw_graph,
-       layout = layout_fw,
-       vertex.size = vertex_size,
-       edge.width = edge_width)
+  for (i in seq_along(x$food_web)) {
+    plot(x$food_web[[i]])
+  }
   
 }
 
