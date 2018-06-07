@@ -99,9 +99,8 @@ test_that('estimate production works', {
   
   # expect warning if names of primary producers do not match node names
   names(new_producers) <- NULL
-  expect_output(estimate_production(test_trophic_dynamics, new_producers,
-                                    stochastic = NULL, nsim = 2),
-                "names of primary_producers do not match nodes")
+  expect_error(estimate_production(test_trophic_dynamics, new_producers,
+                                   stochastic = NULL, nsim = 2))
   
   
 })
