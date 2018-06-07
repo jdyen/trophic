@@ -96,13 +96,29 @@ test_that('estimate production works', {
                                                    dominance_matrix = list(test_dominance, test_dominance))
   expect_silent(estimate_production(test_trophic_dynamics2, test_primary_producers,
                                     stochastic = c("efficiency"), nsim = 3))
+
+  # expect silent with stochastic food web
+  stoch_int_mat <- food_web
+  stoch_int_mat <- stoch_int_mat * runif(length(stoch_int_mat), min = 0, max = 1)
+  test_fw_stoch <- build_food_web(interaction_matrix = food_web)
+  stoch_dyn <- build_trophic_dynamics(food_web = test_fw_stoch,
+                                      efficiency_matrix = test_efficiency_matrix,
+                                      dominance_matrix = test_dominance)
+  expect_silent(estimate_production(stoch_dyn, test_primary_producers,
+                                    stochastic = c("food_web"), nsim = 3))
   
   # expect warning if names of primary producers do not match node names
   new_producers <- test_primary_producers
-  names(new_producers) <- NULL
+  
+  # partial mismatch
+  names(new_producers)[1] <- "random_string"
   expect_error(estimate_production(test_trophic_dynamics, new_producers,
                                    stochastic = NULL, nsim = 2))
   
+  # full mismatch
+  names(new_producers) <- NULL
+  expect_error(estimate_production(test_trophic_dynamics, new_producers,
+                                   stochastic = NULL, nsim = 2))
   
 })
 
@@ -126,7 +142,7 @@ test_that('print works', {
   
 })
 
-test_that('is.food_web works', {
+test_that('is.production_estimates works', {
   
   test_fw <- build_food_web(interaction_matrix = food_web)
   test_efficiency_matrix <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
