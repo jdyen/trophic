@@ -92,17 +92,106 @@ fish_biomass_quantiles <- extract_nodes(predicted_biomass, nodes = "large.bodied
 ```
 
 ## example: predicting biomass of a high-order predator with uncertain food web
+We can repeat the previous example but account for uncertainty in the stucture of the food web. In this case, the interaction matrix takes values in [0, 1] rather than being equal exactly to zero or one. The production estimates are based on `nsim` replicates, with the food web drawn at random in each replicate based on the values (probabilities) in the interaction matrix.
 ```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
 
-# do something
+# load trophic package
+library(trophic)
+
+# prepare food web, transfer efficiencies, and dominance matrix
+stoch_food_web <- food_web * runif(length(food_web), min = 0, max = 1)
+example_fw <- build_food_web(interaction_matrix = stoch_food_web)
+example_eps <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                       efficiency_sd = 0.05)
+example_doms <- build_dominance_matrix(dominance = dominance_matrix)
+
+# build primary producers object
+example_pp <- build_primary_producers(production_mean = production_mean,
+                                      production_sd = production_sd)
+
+# collate trophic_dynamics object
+example_trophic <- build_trophic_dynamics(food_web = example_fw,
+                                          efficiency_matrix = example_eps,
+                                          dominance_matrix = example_doms)
+
+# predict production of all nodes
+predicted_production <- estimate_production(trophic_dynamics = example_trophic,
+                                            primary_producers = example_pp,
+                                            stochastic = c("efficiency",
+                                                           "primary_production"))
+
+# create a P:B ratio object to link production to biomass
+example_pb <- build_pb_ratio(range = c(0.25, 5.75), type = "fixed")
+
+# use P:B ratio to estimate biomass from production
+predicted_biomass <- estimate_biomass(production_estimates = predicted_production,
+                                      pb_ratio = example_pb)
+
+# plot biomass for all nodes
+plot(predicted_biomass)
+
+# plot biomass for nodes of interest
+plot(predicted_biomass, nodes = c(16:19))
+
+# plot biomass for nodes of interest
+plot(predicted_biomass, nodes = c("small.fish", "large.bodied.native.fish"))
+
+# extract mean of biomass for a single node of interest
+fish_biomass_mean <- extract_nodes(predicted_biomass, nodes = "large.bodied.native.fish",
+                                   FUN = mean)
+
+# extract quantiles of biomass for a single node of interest
+fish_biomass_quantiles <- extract_nodes(predicted_biomass, nodes = "large.bodied.native.fish",
+                                        FUN = quantile, p = c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975))
 
 ```
 
 ## example: calculating sensitivity of predicted biomass to transfer efficiencies
 ```{r results="hide", warning=FALSE, error=FALSE, fig.width=10}  
 
-# do something
+# load trophic package
+library(trophic)
 
+# prepare food web, transfer efficiencies, and dominance matrix
+example_fw <- build_food_web(interaction_matrix = food_web)
+example_eps <- build_efficiency_matrix(efficiency_mean = efficiency_mean,
+                                       efficiency_sd = 0.05)
+example_doms <- build_dominance_matrix(dominance = dominance_matrix)
+
+# build primary producers object
+example_pp <- build_primary_producers(production_mean = production_mean,
+                                      production_sd = production_sd)
+
+# collate trophic_dynamics object
+example_trophic <- build_trophic_dynamics(food_web = example_fw,
+                                          efficiency_matrix = example_eps,
+                                          dominance_matrix = example_doms)
+
+# predict production of all nodes
+predicted_production <- estimate_production(trophic_dynamics = example_trophic,
+                                            primary_producers = example_pp,
+                                            stochastic = c("efficiency",
+                                                           "primary_production"))
+
+# create a P:B ratio object to link production to biomass
+example_pb <- build_pb_ratio(range = c(0.25, 5.75), length = 4)
+
+# use P:B ratio to estimate biomass from production
+predicted_biomass <- estimate_biomass(production_estimates = predicted_production,
+                                      pb_ratio = example_pb)
+
+# plot biomass for all nodes
+par(mfrow = c(2, 2))
+plot(predicted_biomass)
+
+# plot biomass for nodes of interest
+plot(predicted_biomass, nodes = c(16:19))
+
+# plot biomass for nodes of interest
+plot(predicted_biomass, nodes = c("small.fish", "large.bodied.native.fish"))
+
+# reset plot settings
+par(mfrow = c(1, 1))
 ```
 
 ## example: calculating sensitivity of predicted biomass to species' dominances

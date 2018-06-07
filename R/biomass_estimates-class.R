@@ -63,8 +63,8 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
     
     biomass <- vector("list", length = length(pb_ratio$values))
     for (i in seq_along(pb_ratio$values)) {
-      biomass <- lapply(production_estimates$production,
-                        function(x) x * (10 / pb_ratio$values[i]))
+      biomass[[i]] <- lapply(production_estimates$production,
+                             function(x) x * (10 / pb_ratio$values[i]))
     } 
     
   } 
@@ -80,6 +80,7 @@ estimate_biomass <- function(production_estimates, pb_ratio) {
     
   }
    
+  # add extra info here and in estimate_production
   biomass_estimates <- list(biomass = biomass,
                             replicates = production_estimates$replicates)
   
