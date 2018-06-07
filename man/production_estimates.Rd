@@ -68,8 +68,9 @@ is.production_estimates(x)
 }
 
 # Print information about the 'production_estimates' object
-
+\dontrun{
 print(x)
+}
 
 # Plot a 'production_estimates' object
 
