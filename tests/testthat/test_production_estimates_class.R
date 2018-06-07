@@ -98,6 +98,7 @@ test_that('estimate production works', {
   #                                   stochastic = c("efficiency"), nsim = 3))
   
   # expect warning if names of primary producers do not match node names
+  new_producers <- test_primary_producers
   names(new_producers) <- NULL
   expect_error(estimate_production(test_trophic_dynamics, new_producers,
                                    stochastic = NULL, nsim = 2))
