@@ -236,8 +236,8 @@ estimate <- function(i,
     
     production[primary_producer_id, ] <- matrix(truncnorm::rtruncnorm((nsim * primary_producers$n),
                                                                       a = 0,
-                                                                      mean = primary_producers$mean,
-                                                                      sd = primary_producers$sd),
+                                                                      mean = unlist(primary_producers$mean),
+                                                                      sd = unlist(primary_producers$sd)),
                                                 nrow = primary_producers$n)
     
   } else {
