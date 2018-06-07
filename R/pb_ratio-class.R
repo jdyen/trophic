@@ -125,6 +125,11 @@ print.pb_ratio <- function (x, ...) {
 
 plot.pb_ratio <- function (x, ...) {
   
+  # test if probs exists
+  if (is.null(x$probs) | (x$type != "stochastic")) {
+    stop("plot.pb_ratio only works with stochastic pb_ratio objects")
+  }
+  
   # plot distribution of pb_ratio values
   plot(x$probs ~ x$values,
        bty = "l", las = 1,
