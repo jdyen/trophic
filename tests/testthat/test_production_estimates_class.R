@@ -52,7 +52,7 @@ test_that('estimate production works', {
   # but expect all production estimates to be equal in this case
   prod_est <- estimate_production(test_trophic_dynamics, test_primary_producers,
                                   stochastic = c("bananas"), nsim = 2)
-  expect_equal(prod_est$production[, 1], prod_est$production[, 2])
+  expect_equal(prod_est$production[[1]][, 1], prod_est$production[[1]][, 2])
 
   # expect silent if nsim > 1 and any combo of inputs stochastic
   expect_silent(estimate_production(test_trophic_dynamics, test_primary_producers,
