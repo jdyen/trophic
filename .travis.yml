@@ -6,8 +6,13 @@ dist: trusty
 r_packages:
   - truncnorm
   - future
+  - future.apply
+  - stats
+  - graphics
+  - rmarkdown
   - igraph
   - testthat
+  - covr
   - knitr
 
 cache:
